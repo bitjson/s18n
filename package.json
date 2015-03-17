@@ -4,7 +4,7 @@
   "description": "Smart, semantic localization for html.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [
     "localize",
@@ -14,5 +14,8 @@
     "internationalization"
   ],
   "author": "Jason Dreyzehner <jason@dreyzehner.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^2.2.1"
+  }
 }
