@@ -2,7 +2,10 @@
   "name": "s18n",
   "version": "0.0.1",
   "description": "Smart, semantic localization for html.",
-  "main": "index.js",
+  "main": "lib/s18n.js",
+  "bin": {
+    "s18n": "bin/s18n"
+  },
   "scripts": {
     "test": "mocha"
   },
@@ -17,5 +20,8 @@
   "license": "MIT",
   "devDependencies": {
     "mocha": "^2.2.1"
+  },
+  "dependencies": {
+    "commander": "^2.7.1"
   }
 }
