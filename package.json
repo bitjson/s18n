@@ -1,0 +1,18 @@
+{
+  "name": "s18n",
+  "version": "0.0.1",
+  "description": "Smart, semantic localization for html.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "localize",
+    "l10n",
+    "translate",
+    "i18n",
+    "internationalization"
+  ],
+  "author": "Jason Dreyzehner <jason@dreyzehner.com>",
+  "license": "MIT"
+}
