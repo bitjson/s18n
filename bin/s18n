@@ -3,42 +3,8 @@
 var program = require('commander');
 
 program
-  .version('0.0.1');
-
-
-program
-  .command('extract <files...>')
-  .description('parse html and extract localizable strings from globs of files')
-  .option('-a, --attributes [attrs]', 'set html attributes to localize')
-  .option('-d, --directives [dirs]', 'set html attributes to mark elements for localization')
-  .option('-e, --elements [elems]', 'set html elements to localize')
-  .option('-h, --hash <algo>', 'set hashing algorithm to calculate string IDs')
-  .option('-l, --length <length>', 'set length of string IDs')
-  .option('-o, --output <path>', 'the output path of the extracted locale file, defaults to stdout')
-  .action(function(files, options){
-    console.log(files);
-    console.log(attrs);
-    console.log(dirs);
-    console.log(elems);
-    console.log(algo);
-    console.log(length);
-    console.log(file);
-  });
-
-program
-  .command('localize <files...>')
-  .description('localize globs of html files')
-  .option('-l, --locales <files>', 'translated locale files to use in localization')
-  .action(function(files, options){
-    console.log(files);
-  });
-
-program
-  .command('simulate <files...>')
-  .description('Simulate translation of globs of files')
-  .action(function(files, options){
-    console.log(files);
-  });
-
-
-program.parse(process.argv);
+  .version('0.0.1')
+  .command('extract [options]', 'parse html and extract localizable strings from globs of files')
+  .command('localize [options]', 'localize globs of html files')
+  .command('map [options]', 'map a dictionary of find/replace strings to simulate localization')
+  .parse(process.argv);

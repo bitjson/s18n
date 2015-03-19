@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+
+program
+  .option('-a, --attributes', 'set html attributes to localize')
+  .parse(process.argv);

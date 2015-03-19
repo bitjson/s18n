@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+
+program
+  .option('-a, --attributes [attrs...]', 'set html attributes to localize')
+  .option('-d, --directives [dirs]', 'set html attributes to mark elements for localization')
+  .option('-e, --elements [elems]', 'set html elements to localize')
+  .option('-p, --path [globs]', 'set html elements to localize')
+  .option('-h, --hash <algo>', 'set hashing algorithm to calculate string IDs')
+  .option('-l, --length <length>', 'set length of string IDs')
+  .option('-o, --output <path>', 'the output path of the extracted locale file, defaults to stdout')
+  .parse(process.argv);
