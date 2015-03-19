@@ -3,11 +3,28 @@
 var program = require('commander');
 
 program
-  .option('-a, --attributes [attrs...]', 'set html attributes to localize')
-  .option('-d, --directives [dirs]', 'set html attributes to mark elements for localization')
-  .option('-e, --elements [elems]', 'set html elements to localize')
-  .option('-p, --path [globs]', 'set html elements to localize')
-  .option('-h, --hash <algo>', 'set hashing algorithm to calculate string IDs')
-  .option('-l, --length <length>', 'set length of string IDs')
-  .option('-o, --output <path>', 'the output path of the extracted locale file, defaults to stdout')
-  .parse(process.argv);
+  .option('-a, --attributes [attrs]', 'set html attributes to localize [default: "alt,title" | none: "."]')
+  .option('-d, --directives [dirs]', 'set html attributes to mark elements for localization [default: "localize" | none: "."]')
+  .option('-e, --elements [elems]', 'set html elements to localize [default: "title,p,h1,h2,h3,h4,h5,h6" | none: "."]')
+  .option('-p, --path [globs]', 'set globs to search for parsable html files [default: "**/*.html"]')
+  .option('--hash <algo>', 'set hashing algorithm to calculate string IDs [default: md5]')
+  .option('--length <length>', 'set length of string IDs [default: 8]')
+
+program.on('--help', function(){
+  console.log('  Examples:');
+  console.log('');
+  console.log('    $ s18n extract -p "**/*.html, !notranslate/*.html"');
+  console.log('    $ s18n extract -a . -e . -d translate=yes');
+  console.log('    $ s18n extract > locales/en.json');
+  console.log('');
+});
+
+program.parse(process.argv);
+
+if(typeof program.args !== "undefined" && program.args.length > 0){
+  console.log('');
+  console.log('Unrecognized arguement. Try placing quotes around arguements.');
+  console.log('');  console.log('Example:');
+  console.log('$ s18n extract -e "headings, p, div"');
+  program.help('');
+}

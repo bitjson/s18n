@@ -6,5 +6,19 @@ program
   .version('0.0.1')
   .command('extract [options]', 'parse html and extract localizable strings from globs of files')
   .command('localize [options]', 'localize globs of html files')
-  .command('map [options]', 'map a dictionary of find/replace strings to simulate localization')
-  .parse(process.argv);
+  .command('map [options]', 'map a dictionary of find/replace strings to simulate localization');
+
+program.on('--help', function(){
+  console.log('  Examples:');
+  console.log('');
+  console.log('    $ s18n extract > "locales/en.json"');
+  console.log('    $ s18n map "locales/en.json" -l "locales" -c fr,es,de');
+  console.log('    $ s18n localize -l "locales"');
+  console.log('');
+});
+
+program.parse(process.argv);
+
+if(!process.argv.slice(2).length){
+  program.help();
+}
