@@ -3,12 +3,12 @@
 var program = require('commander');
 
 program
-  .option('-a, --attributes [attrs]', 'set html attributes to localize [default: "alt,title" | none: "."]')
-  .option('-d, --directives [dirs]', 'set html attributes to mark elements for localization [default: "localize" | none: "."]')
-  .option('-e, --elements [elems]', 'set html elements to localize [default: "title,p,h1,h2,h3,h4,h5,h6" | none: "."]')
-  .option('-p, --path [globs]', 'set globs to search for parsable html files [default: "**/*.html"]')
-  .option('--hash <algo>', 'set hashing algorithm to calculate string IDs [default: md5]')
-  .option('--length <length>', 'set length of string IDs [default: 8]')
+  .option('-a, --attributes [attrs]', 'html attributes to localize [default: "alt,title" | none: "."]')
+  .option('-d, --directives [dirs]', 'html attributes to mark elements for localization [default: "localize" | none: "."]')
+  .option('-e, --elements [elems]', 'html elements to localize [default: "title,p,h1,h2,h3,h4,h5,h6" | none: "."]')
+  .option('-p, --path [globs]', 'globs to search for parsable html files [default: "**/*.html"]')
+  .option('--hash <algo>', 'hashing algorithm to calculate string IDs [default: md5]')
+  .option('--length <length>', 'length of string IDs [default: 8]')
 
 program.on('--help', function(){
   console.log('  Examples:');
@@ -24,7 +24,7 @@ program.parse(process.argv);
 if(typeof program.args !== "undefined" && program.args.length > 0){
   console.log('');
   console.log('Unrecognized arguement. Try placing quotes around arguements.');
-  console.log('');  console.log('Example:');
-  console.log('$ s18n extract -e "headings, p, div"');
+  console.log('');  console.log('E.g.:');
+  console.log('$ s18n extract -e "p, div"');
   program.help('');
 }
