@@ -1,7 +1,0 @@
-#!/usr/bin/env node
-
-var program = require('commander');
-
-program
-  .option('-l, --locales <files>', 'translated locale files to use in localization');
-  .parse(process.argv);
