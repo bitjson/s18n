@@ -14,11 +14,11 @@ gulp.task('default', function(){
   runSequence(['watch']);
 });
 
-gulp.task('watch', ['jshint', 'test'], function(){
-  gulp.watch([bin, js, lib, tests], ['jshint', 'test']);
+gulp.task('watch', ['test'], function(){
+  gulp.watch([bin, js, lib, tests], ['test']);
 });
 
-gulp.task('test', ['rm-coverage'], function(cb) {
+gulp.task('test', ['jshint','rm-coverage'], function(cb) {
   gulp.src([bin, lib])
     .pipe($.istanbul())
     .pipe($.istanbul.hookRequire())
