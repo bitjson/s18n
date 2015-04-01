@@ -4,4 +4,4 @@ node_js:
   - '0.12'
   - '0.10'
 after_success:
-- if node --version == 0.10*; then gulp coveralls; fi
+- if node --version == 0.10*; then npm run coveralls; fi
