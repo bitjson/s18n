@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/s18n.svg)](http://badge.fury.io/js/s18n) [![Build Status](https://travis-ci.org/bitjson/s18n.svg)](https://travis-ci.org/bitjson/s18n) [![Coverage Status](https://coveralls.io/repos/bitjson/s18n/badge.svg)](https://coveralls.io/r/bitjson/s18n) [![Dependency Status](https://david-dm.org/bitjson/s18n.svg)](https://david-dm.org/bitjson/s18n)
+
 s18n (WIP)
 ==========
 
