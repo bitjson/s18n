@@ -39,6 +39,7 @@
     "gulp-mocha": "^2.0.1",
     "jshint-stylish": "^1.0.1",
     "mocha-lcov-reporter": "0.0.2",
+    "pre-commit": "^1.0.6",
     "rimraf": "^2.3.2",
     "run-sequence": "^1.0.2"
   }
