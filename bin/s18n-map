@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+'use strict';
+
 var program = require('commander');
 
 program
@@ -27,7 +29,7 @@ if(!process.argv.slice(2).length){
 
 console.log(program);
 
-if(typeof program.args !== "undefined" && program.args.length > 1){
+if(typeof program.args !== 'undefined' && program.args.length > 1){
   console.log('');
   console.log('Unrecognized arguement. Try placing quotes around arguements.');
   console.log('');  console.log('E.g.:');

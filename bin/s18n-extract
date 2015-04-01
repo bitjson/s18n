@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+'use strict';
+
 var program = require('commander');
 
 program
@@ -8,7 +10,7 @@ program
   .option('-e, --elements [elems]', 'html elements to localize [default: "title,p,h1,h2,h3,h4,h5,h6" | none: "."]')
   .option('-p, --path [paths]', 'paths or patterns (globby) to find parsable html files [default: "**/*.html"]')
   .option('--hash <algo>', 'hashing algorithm to calculate string IDs [default: md5]')
-  .option('--length <length>', 'length of string IDs [default: 8]')
+  .option('--length <length>', 'length of string IDs [default: 8]');
 
 program.on('--help', function(){
   console.log('  Examples:');
@@ -21,7 +23,7 @@ program.on('--help', function(){
 
 program.parse(process.argv);
 
-if(typeof program.args !== "undefined" && program.args.length > 0){
+if(typeof program.args !== 'undefined' && program.args.length > 0){
   console.log('');
   console.log('Unrecognized arguement. Try placing quotes around arguements.');
   console.log('');  console.log('E.g.:');
