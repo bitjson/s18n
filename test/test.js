@@ -12,6 +12,26 @@ describe('s18n', function() {
       assert.equal(typeof s18n.extract, 'function');
     });
 
+    it('should extract locale strings from configured html attributes', function() {
+      var html = '<img src="example.gif" data-custom="custom attribute">';
+      var locale = s18n.extract(html, {
+        attributes: ['data-custom']
+      });
+      assert.deepEqual(JSON.parse(locale), {
+        '89f8af89':'custom attribute'
+      });
+    });
+
+    it('should extract locale strings from configured html elements', function() {
+      var html = '<h1>heading</h1><custom>Custom element</custom>';
+      var locale = s18n.extract(html, {
+        elements: ['custom']
+      });
+      assert.deepEqual(JSON.parse(locale), {
+        '74251aeb':'Custom element'
+      });
+    });
+
   });
 
   describe('.localize()', function() {

@@ -29,7 +29,9 @@
   },
   "homepage": "https://github.com/bitjson/s18n",
   "dependencies": {
-    "commander": "^2.7.1"
+    "commander": "^2.7.1",
+    "globby": "^1.2.0",
+    "htmlparser2": "^3.8.2"
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
