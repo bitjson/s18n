@@ -5,8 +5,8 @@ var s18n = require('../');
 
 describe('s18n.extract()', function() {
 
-  it('should have an "extract" method', function() {
-    assert.equal(typeof s18n, 'object');
+  it('should be a method', function() {
+    assert.notStrictEqual(typeof s18n, 'undefined');
     assert.equal(typeof s18n.extract, 'function');
   });
 
@@ -15,7 +15,7 @@ describe('s18n.extract()', function() {
     var locale = s18n.extract(html, {
       attributes: ['data-custom']
     });
-    assert.deepEqual(JSON.parse(locale), {
+    assert.deepEqual(locale, {
       '89f8af89':'custom attribute'
     });
   });
@@ -25,7 +25,7 @@ describe('s18n.extract()', function() {
     var locale = s18n.extract(html, {
       elements: ['custom']
     });
-    assert.deepEqual(JSON.parse(locale), {
+    assert.deepEqual(locale, {
       '74251aeb':'Custom element'
     });
   });
@@ -35,7 +35,7 @@ describe('s18n.extract()', function() {
     var locale = s18n.extract(html, {
         directives : ['localize', 'custom']
       });
-    assert.deepEqual(JSON.parse(locale), {
+    assert.deepEqual(locale, {
       '120ea8a2':'This is a test.',
       '6bd3b8ac':'custom directive'
     });
@@ -46,7 +46,7 @@ describe('s18n.extract()', function() {
     var locale = s18n.extract(html, {
         hashAlgorithm : 'rmd160'
       });
-    assert.deepEqual(JSON.parse(locale), {
+    assert.deepEqual(locale, {
       '3c82f755':'This is a test.'
     });
   });
@@ -56,7 +56,7 @@ describe('s18n.extract()', function() {
     var locale = s18n.extract(html, {
         hashLength : 13
       });
-    assert.deepEqual(JSON.parse(locale), {
+    assert.deepEqual(locale, {
       '120ea8a25e5d4':'This is a test.'
     });
   });

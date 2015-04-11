@@ -42,7 +42,7 @@ $ s18n extract
 CLI
 ---
 
-To access the CLI system-wide, s18n can be installed globally:
+To access the CLI system-wide, s18n can be installed globally using [npm](https://docs.npmjs.com/getting-started/installing-node):
 
 ```bash
 $ npm install -g s18n
@@ -105,7 +105,7 @@ var options = {
   ]
 };
 
-var content = s18n.localize(html, options);
+var content = s18n(html, options);
 
 // content =>
 {
@@ -140,8 +140,12 @@ var test = s18n.map(locale, { dictionary: 'accents' });
 Options
 -------
 
-### s18n.localize(html, options)
+### s18n(html, options)
 
 ### s18n.extract(html, options)
+
+### s18n.extractFiles(glob, options, callback)
+
+#### callback(error, locale)
 
 ### s18n.map(locale, options)
