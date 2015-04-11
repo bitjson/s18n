@@ -16,7 +16,7 @@ describe('s18n.extract()', function() {
       attributes: ['data-custom']
     });
     assert.deepEqual(locale, {
-      '89f8af89':'custom attribute'
+      '89f8af89': 'custom attribute'
     });
   });
 
@@ -26,38 +26,38 @@ describe('s18n.extract()', function() {
       elements: ['custom']
     });
     assert.deepEqual(locale, {
-      '74251aeb':'Custom element'
+      '74251aeb': 'Custom element'
     });
   });
 
   it('should extract locale strings from html elements with configured directives', function() {
     var html = '<div localize>This is a test.</div><div custom>custom directive</div>';
     var locale = s18n.extract(html, {
-        directives : ['localize', 'custom']
-      });
+      directives: ['localize', 'custom']
+    });
     assert.deepEqual(locale, {
-      '120ea8a2':'This is a test.',
-      '6bd3b8ac':'custom directive'
+      '120ea8a2': 'This is a test.',
+      '6bd3b8ac': 'custom directive'
     });
   });
 
   it('should allow other hash algorithms', function() {
     var html = '<p>This is a test.</p>';
     var locale = s18n.extract(html, {
-        hashAlgorithm : 'rmd160'
-      });
+      hashAlgorithm: 'rmd160'
+    });
     assert.deepEqual(locale, {
-      '3c82f755':'This is a test.'
+      '3c82f755': 'This is a test.'
     });
   });
 
   it('should allow for different hash lengths', function() {
     var html = '<p>This is a test.</p>';
     var locale = s18n.extract(html, {
-        hashLength : 13
-      });
+      hashLength: 13
+    });
     assert.deepEqual(locale, {
-      '120ea8a25e5d4':'This is a test.'
+      '120ea8a25e5d4': 'This is a test.'
     });
   });
 
