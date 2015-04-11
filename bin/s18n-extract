@@ -14,7 +14,7 @@ program
   .option('--hash <algo>', 'hashing algorithm to calculate string IDs [default: md5]')
   .option('--length <length>', 'length of string IDs [default: 8]');
 
-program.on('--help', function(){
+program.on('--help', function() {
   console.log('  Examples:');
   console.log('');
   console.log('    $ s18n extract -s "<p>Hello, World!</p>"');
@@ -26,30 +26,39 @@ program.on('--help', function(){
 
 program.parse(process.argv);
 
-if(typeof program.args !== 'undefined' && program.args.length > 0){
+if (typeof program.args !== 'undefined' && program.args.length > 0) {
   console.log('');
   console.log('Unrecognized arguement. Try placing quotes around arguements.');
-  console.log('');  console.log('E.g.:');
+  console.log('');
+  console.log('E.g.:');
   console.log('$ s18n extract -e "p, div"');
   program.help('');
 }
 
-if(program.string && program.paths){
+if (program.string && program.paths) {
   console.log('');
   console.log('Both the paths and string arguments are set. Please choose a single extraction source.');
-  console.log('');  console.log('E.g.:');
+  console.log('');
+  console.log('E.g.:');
   console.log('$ s18n extract -e "p, div"');
   program.help('');
 }
 
-var options = {};
-['attributes', 'directives', 'elements', 'hash', 'length'].forEach(
-  function(option, index){
-    if(program[option]){
-      options[option] = program[option];
-    }
-  });
+var options = {},
+  map = {
+    attributes: 'attributes',
+    directives: 'directives',
+    elements: 'elements',
+    hash: 'hashAlgorithm',
+    length: 'hashLength'
+  };
 
-if(program.string){
+for (var key in map) {
+  if (program[key]) {
+    options[map[key]] = program[key];
+  }
+}
+
+if (program.string) {
   console.log(s18n.extract(program.string, options));
 }
