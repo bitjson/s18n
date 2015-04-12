@@ -19,10 +19,25 @@ describe('s18n.extractFiles()', function() {
         console.error(err);
       }
       assert.deepEqual(locale, {
-        'acbd18db': 'foo',
         '37b51d19': 'bar',
-        '73feffa4': 'baz'
+        '73feffa4': 'baz',
+        'acbd18db': 'foo'
       });
+      cb();
+    });
+  });
+
+  it('should return an alphabetically sorted locale object', function(cb) {
+    s18n.extractFiles(fixtures.a, function(err, locale){
+      if(err){
+        console.error(err);
+      }
+      var count = 0;
+      var ordered = ['bar', 'baz', 'foo'];
+      for(var number in locale){
+        assert.equal(locale[number], ordered[count]);
+        count++;
+      }
       cb();
     });
   });
