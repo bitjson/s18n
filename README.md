@@ -144,8 +144,14 @@ Options
 
 ### s18n.extract(html, options)
 
-### s18n.extractFiles(glob, options, callback)
+### s18n.extractFiles(glob, [options,] callback)
 
 #### callback(error, locale)
+
+### s18n.formatLocale(glob, [options,] callback)
+
+#### options
+
+##### object *(boolean)*
 
 ### s18n.map(locale, options)

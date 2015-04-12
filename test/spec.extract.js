@@ -61,4 +61,15 @@ describe('s18n.extract()', function() {
     });
   });
 
+  it('should return an alphabetically sorted locale object', function() {
+    var html = '<p>String A</p><p>String C</p><p>String B</p>';
+    var locale = s18n.extract(html);
+    var count = 0;
+    var ordered = ['String A', 'String B', 'String C'];
+    for(var number in locale){
+      assert.equal(locale[number], ordered[count]);
+      count++;
+    }
+  });
+
 });
