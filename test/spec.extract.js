@@ -31,13 +31,24 @@ describe('s18n.extract()', function() {
   });
 
   it('should extract locale strings from html elements with configured directives', function() {
-    var html = '<div localize>This is a test.</div><div custom>custom directive</div>';
+    var html = '<div translate="yes">This is a test.</div><div custom>custom directive</div>';
     var locale = s18n.extract(html, {
-      directives: ['localize', 'custom']
+      directives: ['translate=yes', 'custom']
     });
     assert.deepEqual(locale, {
       '120ea8a2': 'This is a test.',
       '6bd3b8ac': 'custom directive'
+    });
+  });
+
+  it('should not extract locale strings from html elements with configured cancelers', function() {
+    var html = '<p>Translate.</p><p translate="no">Do not translate.</p>';
+    var locale = s18n.extract(html, {
+      elements: ['p'],
+      cancelers: ['translate=no']
+    });
+    assert.deepEqual(locale, {
+      '0e7c5573': 'Translate.'
     });
   });
 
