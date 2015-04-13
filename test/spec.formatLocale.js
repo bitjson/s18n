@@ -16,7 +16,9 @@ describe('s18n.extractFiles()', function() {
       '37b51d19': 'bar',
       '73feffa4': 'baz'
     };
-    var formatedLocale = s18n.formatLocale(locale);
+    var formatedLocale = s18n.formatLocale(locale, {
+      stringify: true
+    });
     assert.equal(formatedLocale, '{\n  "37b51d19": "bar",\n  "73feffa4": "baz",\n  "acbd18db": "foo"\n}');
   });
 
@@ -27,9 +29,7 @@ describe('s18n.extractFiles()', function() {
       '37b51d19': 'bar',
       '73feffa4': 'baz'
     };
-    var formatedLocale = s18n.formatLocale(locale, {
-      object: true
-    });
+    var formatedLocale = s18n.formatLocale(locale);
     var count = 0;
     var ordered = ['bar', 'baz', 'foo', 'foo'];
     for(var number in formatedLocale){

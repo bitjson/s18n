@@ -152,6 +152,6 @@ Options
 
 #### options
 
-##### object *(boolean)*
+##### stringify *(boolean)*
 
 ### s18n.map(locale, options)

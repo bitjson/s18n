@@ -44,7 +44,9 @@ if (program.string && program.paths) {
   program.help('');
 }
 
-var options = {},
+var options = {
+  stringify: true
+},
   map = {
     attributes: 'attributes',
     directives: 'directives',
@@ -61,4 +63,12 @@ for (var key in map) {
 
 if (program.string) {
   console.log(s18n.extract(program.string, options));
+} else {
+  if(!program.paths){
+    program.paths = '**/*.html';
+  }
+  s18n.extractFiles(program.paths, options, function(err, locale){
+    console.error(err);
+    console.log(locale);
+  });
 }
