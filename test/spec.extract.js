@@ -42,10 +42,10 @@ describe('s18n.extract()', function() {
   });
 
   it('should not extract locale strings from html elements with configured cancelers', function() {
-    var html = '<p>Translate.</p><p translate="no">Do not translate.</p>';
+    var html = '<p>Translate.</p><p translate="no">Do not translate this.</p><p custom>Or this.</p>';
     var locale = s18n.extract(html, {
       elements: ['p'],
-      cancelers: ['translate=no']
+      cancelers: ['translate=no', 'custom']
     });
     assert.deepEqual(locale, {
       '0e7c5573': 'Translate.'
