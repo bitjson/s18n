@@ -10,16 +10,6 @@ describe('s18n.extract()', function() {
     assert.equal(typeof s18n.extract, 'function');
   });
 
-  it('should extract locale strings from configured html attributes', function() {
-    var html = '<img src="example.gif" data-custom="custom attribute">';
-    var locale = s18n.extract(html, {
-      attributes: ['data-custom']
-    });
-    assert.deepEqual(locale, {
-      '89f8af89': 'custom attribute'
-    });
-  });
-
   it('should extract locale strings from configured html elements', function() {
     var html = '<h1>heading</h1><custom>Custom element</custom>';
     var locale = s18n.extract(html, {
@@ -27,6 +17,16 @@ describe('s18n.extract()', function() {
     });
     assert.deepEqual(locale, {
       '74251aeb': 'Custom element'
+    });
+  });
+
+  it('should extract locale strings from configured html attributes', function() {
+    var html = '<img src="example.gif" data-custom="custom attribute">';
+    var locale = s18n.extract(html, {
+      attributes: ['data-custom']
+    });
+    assert.deepEqual(locale, {
+      '89f8af89': 'custom attribute'
     });
   });
 
@@ -49,6 +49,29 @@ describe('s18n.extract()', function() {
     });
     assert.deepEqual(locale, {
       '0e7c5573': 'Translate.'
+    });
+  });
+
+  it('should extract locale strings from attributes provided to the attributeSetter', function() {
+    var html = '<meta s18n-attrs="content another" content="String 1" another="String 2">';
+    var locale = s18n.extract(html, {
+      attributes: 'alt',
+      attributeSetter: 's18n-attrs'
+    });
+    assert.deepEqual(locale, {
+      '08e4e11e': 'String 1',
+      'e48f149a': 'String 2'
+    });
+  });
+
+  it('should not extract locale strings from attributes provided to the attributeCanceler', function() {
+    var html = '<img src="k.png" alt="translate this"><img src="no.gif" alt="not this" cancel-s18n-attrs="alt">';
+    var locale = s18n.extract(html, {
+      attributes: 'alt',
+      attributeCanceler: 'cancel-s18n-attrs'
+    });
+    assert.deepEqual(locale, {
+      '383a7007': 'translate this'
     });
   });
 
