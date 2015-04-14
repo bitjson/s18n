@@ -17,7 +17,11 @@ gulp.task('watch', function(){
   gulp.watch([bin, js, lib, tests], ['test']);
 });
 
-gulp.task('test', ['jshint', 'rm-coverage'], $.shell.task([
+gulp.task('test', ['jshint', 'rm-coverage'], function(){
+  run('cover-tests', 'enforce-coverage');
+});
+
+gulp.task('cover-tests', $.shell.task([
   './node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --print detail'
 ]));
 
@@ -26,6 +30,21 @@ gulp.task('jshint', function () {
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
     .pipe($.if(!developing, $.jshint.reporter('fail')));
+});
+
+gulp.task('enforce-coverage', function () {
+  var options = {
+        thresholds : {
+          statements : 100,
+          branches : 100,
+          lines : 100,
+          functions : 100
+        },
+        coverageDirectory : 'coverage',
+        rootDirectory : ''
+      };
+  return gulp.src('.')
+    .pipe($.istanbulEnforcer(options));
 });
 
 gulp.task('rm-coverage', function (cb) {
