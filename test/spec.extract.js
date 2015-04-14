@@ -65,7 +65,7 @@ describe('s18n.extract()', function() {
   });
 
   it('should not extract locale strings from attributes provided to the attributeCanceler', function() {
-    var html = '<img src="k.png" alt="translate this"><img src="no.gif" alt="not this" cancel-s18n-attrs="alt">';
+    var html = '<img src="k.png" alt="translate this"><img src="no.gif" alt="not this" cancel-s18n-attrs="alt notused">';
     var locale = s18n.extract(html, {
       attributes: 'alt',
       attributeCanceler: 'cancel-s18n-attrs'

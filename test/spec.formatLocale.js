@@ -32,7 +32,7 @@ describe('s18n.extractFiles()', function() {
     var formatedLocale = s18n.formatLocale(locale);
     var count = 0;
     var ordered = ['bar', 'baz', 'foo', 'foo'];
-    for(var number in formatedLocale){
+    for (var number in formatedLocale) {
       assert.equal(formatedLocale[number], ordered[count]);
       count++;
     }

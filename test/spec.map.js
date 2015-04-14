@@ -10,4 +10,8 @@ describe('s18n.map()', function() {
     assert.equal(typeof s18n.map, 'function');
   });
 
+  it('should be called', function() {
+    s18n.map();
+  });
+
 });

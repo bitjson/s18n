@@ -47,7 +47,9 @@
     "mocha": "^2.2.1",
     "mocha-lcov-reporter": "0.0.2",
     "pre-commit": "^1.0.6",
+    "proxyquire": "^1.4.0",
     "rimraf": "^2.3.2",
-    "run-sequence": "^1.0.2"
+    "run-sequence": "^1.0.2",
+    "sinon": "^1.14.1"
   }
 }
