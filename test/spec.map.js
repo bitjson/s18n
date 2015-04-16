@@ -27,4 +27,26 @@ describe('s18n.map()', function() {
     });
   });
 
+  it('should default to the `accents` dictionary', function() {
+    var locale = {
+      '3c82f755': 'This is a test.'
+    };
+    var mappedLocale = s18n.map(locale);
+    assert.deepEqual(mappedLocale, {
+      '3c82f755': 'Thís ís á tést.'
+    });
+  });
+
+  it('should accept the `accents` dictionary', function() {
+    var locale = {
+      '3c82f755': 'This is a test.'
+    };
+    var mappedLocale = s18n.map(locale, {
+      dictionary: 'accents'
+    });
+    assert.deepEqual(mappedLocale, {
+      '3c82f755': 'Thís ís á tést.'
+    });
+  });
+
 });
