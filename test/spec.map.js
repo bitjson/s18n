@@ -10,8 +10,21 @@ describe('s18n.map()', function() {
     assert.equal(typeof s18n.map, 'function');
   });
 
-  it('should be called', function() {
-    s18n.map();
+  it('should replace substrings using a provided dictionary', function() {
+    var locale = {
+      '3c82f755': 'This is a test.'
+    };
+    var mappedLocale = s18n.map(locale, {
+      dictionary: {
+        'Th': 'Z',
+        'a': 'á',
+        'e': 'é',
+        'i': 'í'
+      }
+    });
+    assert.deepEqual(mappedLocale, {
+      '3c82f755': 'Zís ís á tést.'
+    });
   });
 
 });
