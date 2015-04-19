@@ -19,13 +19,15 @@ describe('s18n()', function() {
       '3c82f755': 'Thís ís á tést.'
     };
     assert.throws(
-      function(){
+      function() {
         s18n(html, {
-          locales: [{'accents': accentedLocale}]
+          locales: [{
+            'accents': accentedLocale
+          }]
         });
       },
-      function(err){
-        if ((err instanceof Error) && /`nativeLocale`/.test(err) ) {
+      function(err) {
+        if ((err instanceof Error) && /`nativeLocale`/.test(err)) {
           return true;
         }
       }, 'unexpected error message');
@@ -37,13 +39,13 @@ describe('s18n()', function() {
       '3c82f755': 'This is a test.'
     };
     assert.throws(
-      function(){
+      function() {
         s18n(html, {
           nativeLocale: nativeLocale
         });
       },
-      function(err){
-        if ((err instanceof Error) && /`locales`/.test(err) ) {
+      function(err) {
+        if ((err instanceof Error) && /`locales`/.test(err)) {
           return true;
         }
       }, 'unexpected error message');
@@ -59,9 +61,13 @@ describe('s18n()', function() {
     };
     var localizedHtml = s18n(html, {
       nativeLocale: nativeLocale,
-      locales: [{'accents': accentedLocale}]
+      locales: [{
+        'accents': accentedLocale
+      }]
     });
-    assert.deepEqual(localizedHtml, { accents: '<p>Thís ís á tést.</p>' });
+    assert.deepEqual(localizedHtml, {
+      accents: '<p>Thís ís á tést.</p>'
+    });
   });
 
   it('should localize strings only in localizable places (`>*<`, `"*"`, `\'\'`)', function() {
@@ -74,9 +80,35 @@ describe('s18n()', function() {
     };
     var localizedHtml = s18n(html, {
       nativeLocale: nativeLocale,
-      locales: [{'accents': accentedLocale}]
+      locales: [{
+        'accents': accentedLocale
+      }]
     });
-    assert.deepEqual(localizedHtml, { accents: '<test test="tést" testattr=\'tést\'>tést</test>' });
+    assert.deepEqual(localizedHtml, {
+      accents: '<test test="tést" testattr=\'tést\'>tést</test>'
+    });
+  });
+
+  it('should localize some html with multiple locales', function() {
+    var html = '<p>This is a test.</p>';
+    var localizedHtml = s18n(html, {
+      nativeLocale: {
+        '3c82f755': 'This is a test.'
+      },
+      locales: [{
+        'accents': {
+          '3c82f755': 'Thís ís á tést.'
+        }
+      }, {
+        'denglish': {
+          '3c82f755': 'Zis ist a tesht.'
+        }
+      }]
+    });
+    assert.deepEqual(localizedHtml, {
+      accents: '<p>Thís ís á tést.</p>',
+      denglish: '<p>Zis ist a tesht.</p>'
+    });
   });
 
 });
