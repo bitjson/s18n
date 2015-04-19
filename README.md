@@ -97,13 +97,13 @@ var html = '<title>foo</title>' +
 
 var options = {
   nativeLocale: s18n.extract(html);
-  locales: [
+  locales: {
     'ac': {
       "acbd18db": "fóó",
       "37b51d19": "bár",
       "73feffa4": "báz"
     }
-  ]
+  }
 };
 
 var content = s18n(html, options);

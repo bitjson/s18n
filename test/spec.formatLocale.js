@@ -3,7 +3,7 @@
 var assert = require('assert');
 var s18n = require('../');
 
-describe('s18n.extractFiles()', function() {
+describe('s18n.formatLocale()', function() {
 
   it('should be a method', function() {
     assert.notEqual(typeof s18n, 'undefined');

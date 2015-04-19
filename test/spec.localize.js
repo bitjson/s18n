@@ -61,9 +61,9 @@ describe('s18n()', function() {
     };
     var localizedHtml = s18n(html, {
       nativeLocale: nativeLocale,
-      locales: [{
+      locales: {
         'accents': accentedLocale
-      }]
+      }
     });
     assert.deepEqual(localizedHtml, {
       accents: '<p>Thís ís á tést.</p>'
@@ -80,9 +80,9 @@ describe('s18n()', function() {
     };
     var localizedHtml = s18n(html, {
       nativeLocale: nativeLocale,
-      locales: [{
+      locales: {
         'accents': accentedLocale
-      }]
+      }
     });
     assert.deepEqual(localizedHtml, {
       accents: '<test test="tést" testattr=\'tést\'>tést</test>'
@@ -95,15 +95,14 @@ describe('s18n()', function() {
       nativeLocale: {
         '3c82f755': 'This is a test.'
       },
-      locales: [{
+      locales: {
         'accents': {
           '3c82f755': 'Thís ís á tést.'
-        }
-      }, {
+        },
         'denglish': {
           '3c82f755': 'Zis ist a tesht.'
         }
-      }]
+      }
     });
     assert.deepEqual(localizedHtml, {
       accents: '<p>Thís ís á tést.</p>',
