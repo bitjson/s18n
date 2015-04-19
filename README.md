@@ -15,7 +15,7 @@ Smart, semantic localization for html.
   <body>
     <h1>bar</h1>
     <img alt="baz">
-    <foo localize>bar</foo>
+    <foo s18n>bar</foo>
   </body>
 </html>
 ```
@@ -70,12 +70,12 @@ var s18n = require('s18n');
 
 var html = '<title>foo</title>' +
            '<img alt="bar">' +
-           '<foo localize>baz</foo>';
+           '<foo s18n>baz</foo>';
 
 var locale = s18n.extract(html, {
     elements: ['title'],
     attributes: ['alt'],
-    directives: ['localize'],
+    directives: ['s18n'],
 });
 
 // locale =>
@@ -93,10 +93,11 @@ var s18n = require('s18n');
 
 var html = '<title>foo</title>' +
            '<img alt="bar">' +
-           '<foo localize>baz</foo>';
+           '<foo s18n>baz</foo>';
 
 var options = {
-  locale: [
+  nativeLocale: s18n.extract(html);
+  locales: [
     'ac': {
       "acbd18db": "fóó",
       "37b51d19": "bár",
@@ -109,7 +110,7 @@ var content = s18n(html, options);
 
 // content =>
 {
-  'ac' : '<title>fóó</title><img alt="bár"><foo localize>báz</foo>'
+  'ac' : '<title>fóó</title><img alt="bár"><foo s18n>báz</foo>'
 }
 
 ```
