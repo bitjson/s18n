@@ -48,5 +48,8 @@ gulp.task('enforce-coverage', function () {
 });
 
 gulp.task('rm-coverage', function (cb) {
-    (require('rimraf'))('coverage', cb);
+    require('del')('coverage', function(err){
+      console.error(err);
+      cb();
+    });
 });

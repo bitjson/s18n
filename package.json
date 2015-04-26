@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
+    "del": "^1.1.1",
     "gulp": "^3.8.11",
     "gulp-if": "^1.2.5",
     "gulp-istanbul-enforcer": "^1.0.3",
@@ -49,7 +50,6 @@
     "mocha-lcov-reporter": "0.0.2",
     "pre-commit": "^1.0.6",
     "proxyquire": "^1.4.0",
-    "rimraf": "^2.3.2",
     "run-sequence": "^1.0.2",
     "sinon": "^1.14.1"
   }
