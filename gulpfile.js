@@ -49,7 +49,9 @@ gulp.task('enforce-coverage', function () {
 
 gulp.task('rm-coverage', function (cb) {
     require('del')('coverage', function(err){
-      console.error(err);
+      if(err){
+        console.error(err);        
+      }
       cb();
     });
 });
