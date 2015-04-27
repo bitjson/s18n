@@ -36,7 +36,7 @@ $ s18n extract
 
 ### Usage
 
--	gulp
+-	[gulp plugin](https://github.com/bitjson/gulp-s18n)
 -	command-line
 
 CLI
@@ -156,3 +156,25 @@ Options
 ##### stringify *(boolean)*
 
 ### s18n.map(locale, options)
+
+Contributing
+============
+
+The default Gulp task watches all files and runs tests and code coverage.
+
+```bash
+$ npm install -g gulp
+$ gulp
+```
+
+Testing
+-------
+
+This module strives to maintain passing tests with 100% coverage in every commit, and tests are run pre-commit. If you prefer, you can always skip this check with `git commit --no-verify` and squash WIP commits for pull requests later.
+
+If you're unsure or would like help writing tests or getting to 100% coverage, please don't hesitate to open up a pull request so others can help!
+
+Thanks
+------
+
+Thanks to [Stephen Pair](https://github.com/gasteve) of [bitpay/translations](https://github.com/bitpay/translations) for some of the architectural inspiration behind s18n. This module builds on the idea of using truncated hashes as identifiers for translatable strings, rather than manually developed indexes.
