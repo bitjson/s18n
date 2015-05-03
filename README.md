@@ -3,41 +3,74 @@
 s18n (WIP)
 ==========
 
-Smart, semantic localization for html.
+**Semantic localization for html.**
 
-### Semantic Localization
+S18n parses html elements and attributes to extract text for translation. The automatically generated locale file can then be translated into multiple languages and used by s18n to localize the website or application.
+
+### s18n vs. i18n
+
+S18n provides a simpler, automated alternative to traditional `i18n` (internationalization) libraries, in that it doesn't require outfitting application templates and content with underscore (`_()`) and other i18n functions.
+
+This can be particularly powerful for static generated sites and applications.
+
+### Semantic Localization Example
+
+Given the following `original.html` file:
 
 ```html
-<html>
-  <head>
-    <title>foo</title>
-  </head>
-  <body>
-    <h1>bar</h1>
-    <img alt="baz">
-    <foo s18n>bar</foo>
-  </body>
-</html>
+<h1>foo</h1>
+<img alt="bar">
+<foo s18n>baz</foo>
 ```
 
+Using the CLI's extract command in the same directory (with default element, attribute, and directive options):
+
 ```bash
-$ s18n extract
+$ s18n extract > 'en.json'
 ```
+
+The following `locale` is saved to `en.json`:
 
 ```json
 {
-  "acbd18db": "foo",
   "37b51d19": "bar",
-  "73feffa4": "baz"
+  "73feffa4": "baz",
+  "acbd18db": "foo"
 }
 ```
 
-### s18n vs i18n
+This locale can be translated – or for testing, s18n mapped to a simulated locale:
+
+```bash
+$ s18n map 'en.json' -c 'fr' --dictionary 'accents'
+```
+
+Producing `fr.json`:
+
+```json
+{
+  "37b51d19": "bár",
+  "73feffa4": "báz",
+  "acbd18db": "fóó"
+}
+```
+
+This can then be used to test localization for the original file:
+
+```bash
+$ s18n 'original.html' -l 'fr.json' > 'translated.html'
+```
+
+```html
+<h1>fóó</h1>
+<img alt="bár">
+<foo s18n>báz</foo>
+```
 
 ### Usage
 
 -	[gulp plugin](https://github.com/bitjson/gulp-s18n)
--	command-line
+-	command-line interface
 
 CLI
 ---

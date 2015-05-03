@@ -1,7 +1,7 @@
 {
   "name": "s18n",
   "version": "0.0.1",
-  "description": "Smart, semantic localization for html.",
+  "description": "Semantic localization for html.",
   "main": "lib/s18n.js",
   "bin": {
     "s18n": "bin/s18n"
@@ -16,6 +16,7 @@
     "url": "https://github.com/bitjson/s18n"
   },
   "keywords": [
+    "semantic",
     "localize",
     "l10n",
     "translate",
