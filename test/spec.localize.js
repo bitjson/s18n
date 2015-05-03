@@ -14,7 +14,7 @@ describe('s18n()', function() {
   });
 
   it('should throw an error if nativeLocale option is undefined', function() {
-    var html = '<p>This is a test</p>';
+    var html = '<p>This is a test.</p>';
     var accentedLocale = {
       '3c82f755': 'Thís ís á tést.'
     };
@@ -34,7 +34,7 @@ describe('s18n()', function() {
   });
 
   it('should throw an error if locales option is undefined', function() {
-    var html = '<p>This is a test</p>';
+    var html = '<p>This is a test.</p>';
     var nativeLocale = {
       '3c82f755': 'This is a test.'
     };
@@ -70,7 +70,48 @@ describe('s18n()', function() {
     });
   });
 
-  it('should localize strings only in localizable places (`>*<`, `"*"`, `\'\'`)', function() {
+  it('should localize some html with only one locale', function() {
+    var html = '<p>This is a test.</p>';
+    var nativeLocale = {
+      '3c82f755': 'This is a test.'
+    };
+    var accentedLocale = {
+      '3c82f755': 'Thís ís á tést.'
+    };
+    var localizedHtml = s18n(html, {
+      nativeLocale: nativeLocale,
+      locale: accentedLocale
+    });
+    assert.equal(localizedHtml, '<p>Thís ís á tést.</p>');
+  });
+
+  it('should error if both `locale` and `locales` are set', function() {
+    var html = '<p>This is a test.</p>';
+    var nativeLocale = {
+      '3c82f755': 'This is a test.'
+    };
+    var accentedLocale = {
+      '3c82f755': 'Thís ís á tést.'
+    };
+    assert.throws(
+      function() {
+        s18n(html, {
+          nativeLocale: nativeLocale,
+          locale: accentedLocale,
+          locales: {
+            'de': accentedLocale,
+            'wat': accentedLocale
+          }
+        });
+      },
+      function(err) {
+        if ((err instanceof Error) && /`locale`/.test(err) && /`locales`/.test(err)) {
+          return true;
+        }
+      }, 'unexpected error message');    
+  });
+
+  it('should localize strings only in localizable places (/>*</, /"*"/, /\'*\'/)', function() {
     var html = '<test test="test" testattr=\'test\'>test</test>';
     var nativeLocale = {
       '098f6bcd': 'test'
