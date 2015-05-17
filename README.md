@@ -174,15 +174,17 @@ var test = s18n.map(locale, { dictionary: 'accents' });
 Options
 -------
 
-### s18n(html, options)
+### s18n(html, [options])
 
-### s18n.extract(html, options)
+### s18n.extract(html, [options])
 
 ### s18n.extractFiles(glob, [options,] callback)
 
 #### callback(error, locale)
 
-### s18n.formatLocale(locale, [options,] callback)
+### s18n.compareLocales(localeA, localeB, [options])
+
+### s18n.formatLocale(locale, [options])
 
 #### options
 
