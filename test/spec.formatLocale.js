@@ -17,7 +17,7 @@ describe('s18n.formatLocale()', function() {
       '73feffa4': 'baz'
     };
     var formatedLocale = s18n.formatLocale(locale, {
-      stringify: true
+      output: 'string'
     });
     assert.equal(formatedLocale, '{\n  "37b51d19": "bar",\n  "73feffa4": "baz",\n  "acbd18db": "foo"\n}');
   });
@@ -36,6 +36,20 @@ describe('s18n.formatLocale()', function() {
       assert.equal(formatedLocale[number], ordered[count]);
       count++;
     }
+  });
+
+  it('should throw an error if output option is unrecognized', function() {
+    assert.throws(
+      function() {
+        s18n.formatLocale({}, {
+          output: 'futureFormat'
+        });
+      },
+      function(err) {
+        if ((err instanceof Error) && /`output`/.test(err)) {
+          return true;
+        }
+      }, 'unexpected error message');
   });
 
 });

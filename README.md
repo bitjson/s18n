@@ -182,11 +182,15 @@ Options
 
 #### callback(error, locale)
 
-### s18n.formatLocale(glob, [options,] callback)
+### s18n.formatLocale(locale, [options,] callback)
 
 #### options
 
-##### stringify *(boolean)*
+##### output *(string)*
+
+Options: `string`, `object`
+
+Default: `object`
 
 ### s18n.map(locale, options)
 
