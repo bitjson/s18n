@@ -45,11 +45,8 @@ describe('s18n.formatLocale()', function() {
           output: 'futureFormat'
         });
       },
-      function(err) {
-        if ((err instanceof Error) && /`output`/.test(err)) {
-          return true;
-        }
-      }, 'unexpected error message');
+      /`output`/,
+      'unexpected error message');
   });
 
 });

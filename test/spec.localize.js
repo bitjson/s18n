@@ -26,11 +26,8 @@ describe('s18n()', function() {
           }]
         });
       },
-      function(err) {
-        if ((err instanceof Error) && /`nativeLocale`/.test(err)) {
-          return true;
-        }
-      }, 'unexpected error message');
+      /`nativeLocale`/,
+      'unexpected error message');
   });
 
   it('should throw an error if locales option is undefined', function() {
@@ -44,11 +41,8 @@ describe('s18n()', function() {
           nativeLocale: nativeLocale
         });
       },
-      function(err) {
-        if ((err instanceof Error) && /`locales`/.test(err)) {
-          return true;
-        }
-      }, 'unexpected error message');
+      /`locales`/,
+      'unexpected error message');
   });
 
   it('should localize some html', function() {
@@ -104,11 +98,8 @@ describe('s18n()', function() {
           }
         });
       },
-      function(err) {
-        if ((err instanceof Error) && /`locale`/.test(err) && /`locales`/.test(err)) {
-          return true;
-        }
-      }, 'unexpected error message');    
+      /`locales`/,
+      'unexpected error message');
   });
 
   it('should localize strings only in localizable places (/>*</, /"*"/, /\'*\'/)', function() {
