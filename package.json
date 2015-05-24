@@ -1,6 +1,6 @@
 {
   "name": "s18n",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Semantic localization for html.",
   "main": "lib/s18n.js",
   "bin": {
