@@ -3,14 +3,16 @@
 'use strict';
 
 var program = require('commander');
+var fs = require('fs');
+var s18n = require('../');
 
 program
   .usage('<file>', 'locale file to map')
   .option('-c, --codes [codes]', 'output a "CODE.json" locale for each code, outputs to stdout by default')
-  .option('-d, --dictionary (<map> | <file>)', 'a json object of find/replace mappings [default: accent-vowels]')
+  .option('-d, --dictionary (<map> | <file>)', 'a json object of find/replace mappings [default: accents]')
   .option('-l, --locales <dir>', 'directory to output mapped locales [default: "./"]');
 
-program.on('--help', function(){
+program.on('--help', function() {
   console.log('  Examples:');
   console.log('');
   console.log('    $ s18n map "en.json"');
@@ -23,16 +25,46 @@ program.on('--help', function(){
 
 program.parse(process.argv);
 
-if(!process.argv.slice(2).length){
+if (!process.argv.slice(2).length) {
   program.help();
 }
 
-console.log(program);
-
-if(typeof program.args !== 'undefined' && program.args.length > 1){
+if (typeof program.args !== 'undefined' && program.args.length > 1) {
   console.log('');
   console.log('Unrecognized arguement. Try placing quotes around arguements.');
-  console.log('');  console.log('E.g.:');
+  console.log('');
+  console.log('E.g.:');
   console.log('$ s18n map "en.json" -c "fr, es, de"');
   program.help('');
 }
+
+var codesArray;
+
+if (program.hasOwnProperty('codes')) {
+  // program.codes can be a string or an array
+  codesArray = [].concat(program.codes);
+  console.log('codes option is not implemented');
+  program.help('');
+}
+
+if (program.hasOwnProperty('dictionary')) {
+  console.log('dictionary option is not implemented');
+  program.help('');
+}
+
+if (program.hasOwnProperty('locales')) {
+  console.log('locales directory option is not implemented');
+  program.help('');
+}
+
+var localePath = program.args[0];
+var locale = JSON.parse(fs.readFileSync(localePath));
+var options = {
+  dictionary: 'accents'
+};
+
+var mappedLocale = s18n.map(locale, options);
+
+console.log(s18n.formatLocale(mappedLocale, {
+  output: 'string'
+}));
