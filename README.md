@@ -1,17 +1,15 @@
 [![npm version](https://badge.fury.io/js/s18n.svg)](https://www.npmjs.com/package/s18n) [![Build Status](https://travis-ci.org/bitjson/s18n.svg)](https://travis-ci.org/bitjson/s18n) [![Coverage Status](https://coveralls.io/repos/bitjson/s18n/badge.svg)](https://coveralls.io/r/bitjson/s18n) [![Dependency Status](https://david-dm.org/bitjson/s18n.svg)](https://david-dm.org/bitjson/s18n)
 
-s18n (WIP)
-==========
+Semantic Localization – s18n
+============================
 
-**Semantic localization for html.**
+S18n parses the content of html elements and attributes to extract text for translation. The automatically generated locale file can then be translated into multiple languages and used by s18n to localize the website or application.
 
-S18n parses html elements and attributes to extract text for translation. The automatically generated locale file can then be translated into multiple languages and used by s18n to localize the website or application.
+This can be particularly powerful for static-generated sites and applications. Gulp users interested in this use-case should see [**gulp-l10n**](https://github.com/bitjson/gulp-l10n), which wraps s18n.
 
 ### s18n vs. i18n
 
 S18n provides a simpler, automated alternative to traditional `i18n` (internationalization) libraries, in that it doesn't require outfitting application templates and content with underscore (`_()`) and other i18n functions.
-
-This can be particularly powerful for static generated sites and applications.
 
 ### Semantic Localization Example
 
@@ -67,11 +65,6 @@ $ s18n 'original.html' -l 'fr.json' > 'translated.html'
 <foo s18n>báz</foo>
 ```
 
-### Usage
-
--	[gulp plugin](https://github.com/bitjson/gulp-s18n)
--	command-line interface
-
 CLI
 ---
 
@@ -88,6 +81,8 @@ $ s18n --help
 $ s18n extract --help
 $ s18n map --help
 ```
+
+**Please note**: not all documented CLI options are fully implemented, and CLI scripts are also not currently included in test coverage. Pull requests welcome!
 
 Node API
 --------
