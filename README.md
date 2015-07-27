@@ -1,7 +1,6 @@
 [![npm version](https://badge.fury.io/js/s18n.svg)](https://www.npmjs.com/package/s18n) [![Build Status](https://travis-ci.org/bitjson/s18n.svg)](https://travis-ci.org/bitjson/s18n) [![Coverage Status](https://coveralls.io/repos/bitjson/s18n/badge.svg)](https://coveralls.io/r/bitjson/s18n) [![Dependency Status](https://david-dm.org/bitjson/s18n.svg)](https://david-dm.org/bitjson/s18n)
 
-Semantic Localization – s18n
-============================
+# Semantic Localization – s18n
 
 S18n parses the content of html elements and attributes to extract text for translation. The automatically generated locale file can then be translated into multiple languages and used by s18n to localize the website or application.
 
@@ -11,9 +10,9 @@ This can be particularly powerful for static-generated sites and applications. G
 
 S18n provides a simpler, automated alternative to traditional `i18n` (internationalization) libraries, in that it doesn't require outfitting application templates and content with underscore (`_()`) and other i18n functions.
 
-### Semantic Localization Example
+### Example
 
-Given the following `original.html` file:
+This example uses the s18n CLI. Given the following `original.html` file:
 
 ```html
 <h1>foo</h1>
@@ -65,8 +64,9 @@ $ s18n 'original.html' -l 'fr.json' > 'translated.html'
 <foo s18n>báz</foo>
 ```
 
-CLI
----
+# Command-Line Interface
+
+**Please note**: not all documented CLI options are fully implemented yet, and CLI scripts are also not currently included in test coverage. Pull requests welcome!
 
 To access the CLI system-wide, s18n can be installed globally using [npm](https://docs.npmjs.com/getting-started/installing-node):
 
@@ -82,16 +82,19 @@ $ s18n extract --help
 $ s18n map --help
 ```
 
-**Please note**: not all documented CLI options are fully implemented, and CLI scripts are also not currently included in test coverage. Pull requests welcome!
-
-Node API
---------
+# Node API
 
 ```bash
 $ npm install s18n
 ```
 
-### Extract
+## Extracting the Native Locale
+
+S18n parses html content and extracts strings from selected html elements and attributes. A hash of each string is used to identify it, and each hash-string pair is stored in a `locale` object.
+
+### s18n.extract(html, [extract options])
+
+The extract method accepts a string of html and (optionally) an `extract options` object. It returns a locale object.
 
 ```js
 var s18n = require('s18n');
@@ -114,7 +117,92 @@ var locale = s18n.extract(html, {
 }
 ```
 
-### Localize
+### s18n.extractFiles(glob, [extract options,] callback)
+#### callback(error, locale)
+
+The extract method is asynchronous and accepts a [globby](https://github.com/sindresorhus/globby) glob, an `extract options` object (optional), and a callback. The method asynchronous extracts localizations from each file selected by the glob and combines them into a single `locale` object.
+
+```js
+var s18n = require('s18n');
+var htmlFiles = 'src/**/*.html';
+
+var locale = s18n.extract(html, function(error, locale){
+
+});
+```
+
+### Extract Options
+
+S18n's default extraction options will be ideal for most sites and applications, but advanced customization is possible.
+
+#### elements
+- Accepts: _String_, _Array of Strings_
+- Default: `['title', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']`
+
+S18n will extract the full contents of all selected elements.
+
+#### attributes
+- Accepts: _String_, _Array of Strings_
+- Default: `['alt', 'title']`
+
+S18n will extract the full contents of all selected attributes.
+
+#### directives
+- Accepts: _String_, _Array of Strings_
+- Default: `['s18n', 'translate=yes']`
+
+S18n will extract the full contents of all elements with the following attributes. To localize only elements with an attribute set to a certain value, use an `=` character between the directive and the necessary value.
+
+By default, the [W3C standard `translate=yes` attribute](http://www.w3.org/TR/2013/CR-html5-20130806/dom.html#attr-translate) is honored.
+
+#### cancelers
+- Accepts: _String_, _Array of Strings_
+- Default: `['cancel-s18n', 'translate=no']`
+
+S18n will not extract the contents of any elements with the following attributes. To cancel localization of elements with an attribute set to a certain value, use an `=` character between the directive and the necessary value.
+
+By default, the [W3C standard `translate=no` attribute](http://www.w3.org/TR/2013/CR-html5-20130806/dom.html#attr-translate) is honored.
+
+Cancelers take precedence over any setters/selectors.
+
+#### attributeSetter
+- Accepts: _String_
+- Default: `'s18n-attrs'`
+
+S18n will extract the full contents of all attributes provided in the `attributeSetter` attribute.
+
+```html
+<meta name="description" content="Friendly description." s18n-attrs="content">
+<img src="img/en/1.png" title="test" alt="test2" s18n-attrs="src title alt">
+```
+
+#### attributeCanceler
+- Accepts: _String_
+- Default: `'cancel-s18n-attrs'`
+
+S18n will not extract the contents of any attributes provided in the `attributeCanceler` attribute.
+
+Attribute cancels take precedence over any attribute setters/selectors.
+
+```html
+<img src="img/2.png" title="words" alt="words2" cancel-s18n-attrs="title alt">
+```
+
+#### hashAlgorithm
+- Accepts: _Algorithm name – String_
+- Default: `'md5'`
+
+S18n will use this algorithm to take the hash of each string. `hashAlgorithm` accepts any algorithm supported by [Node's `crypto.createHash()`](https://nodejs.org/api/crypto.html#crypto_crypto_createhash_algorithm) method.
+
+#### hashLength
+- Accepts: _Positive integer – Number_
+- Default: `8`
+
+S18n will truncate hashes to this length when indexing strings in the `locale` object.
+
+## Localize
+
+### s18n(html, [options])
 
 ```js
 var s18n = require('s18n');
@@ -143,10 +231,12 @@ var content = s18n(html, options);
 
 ```
 
-Testing Localization
---------------------
+## Testing Localization
 
 ### Map
+
+### s18n.map(locale, options)
+
 
 ```js
 var s18n = require('s18n');
@@ -166,16 +256,8 @@ var test = s18n.map(locale, { dictionary: 'accents' });
 
 ```
 
-Options
--------
+## Utilities
 
-### s18n(html, [options])
-
-### s18n.extract(html, [options])
-
-### s18n.extractFiles(glob, [options,] callback)
-
-#### callback(error, locale)
 
 ### s18n.compareLocales(localeA, localeB, [options])
 
@@ -189,7 +271,6 @@ Options: `string`, `object`
 
 Default: `object`
 
-### s18n.map(locale, options)
 
 Contributing
 ============
