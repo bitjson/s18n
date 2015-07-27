@@ -1,17 +1,14 @@
 [![npm version](https://badge.fury.io/js/s18n.svg)](https://www.npmjs.com/package/s18n) [![Build Status](https://travis-ci.org/bitjson/s18n.svg)](https://travis-ci.org/bitjson/s18n) [![Coverage Status](https://coveralls.io/repos/bitjson/s18n/badge.svg)](https://coveralls.io/r/bitjson/s18n) [![Dependency Status](https://david-dm.org/bitjson/s18n.svg)](https://david-dm.org/bitjson/s18n)
 
 # Semantic Localization – s18n
-
 S18n parses the content of html elements and attributes to extract text for translation. The automatically generated locale file can then be translated into multiple languages and used by s18n to localize the website or application.
 
 This can be particularly powerful for static-generated sites and applications. Gulp users interested in this use-case should see [**gulp-l10n**](https://github.com/bitjson/gulp-l10n), which wraps s18n.
 
-### s18n vs. i18n
-
+## s18n vs. i18n
 S18n provides a simpler, automated alternative to traditional `i18n` (internationalization) libraries, in that it doesn't require outfitting application templates and content with underscore (`_()`) and other i18n functions.
 
-### Example
-
+## Example
 This example uses the s18n CLI. Given the following `original.html` file:
 
 ```html
@@ -65,7 +62,6 @@ $ s18n 'original.html' -l 'fr.json' > 'translated.html'
 ```
 
 # Command-Line Interface
-
 **Please note**: not all documented CLI options are fully implemented yet, and CLI scripts are also not currently included in test coverage. Pull requests welcome!
 
 To access the CLI system-wide, s18n can be installed globally using [npm](https://docs.npmjs.com/getting-started/installing-node):
@@ -89,11 +85,9 @@ $ npm install s18n
 ```
 
 ## Extracting the Native Locale
-
 S18n parses html content and extracts strings from selected html elements and attributes. A hash of each string is used to identify it, and all hash-string pairs are stored in a `locale` object.
 
 ### s18n.extract(html, [extract options])
-
 The extract method accepts a string of html and (optionally) an `extract options` object. It returns a locale object.
 
 ```js
@@ -117,7 +111,6 @@ The `locale` object:
 ```
 
 ### s18n.extractFiles(glob, [extract options,] callback(err, locale))
-
 The extract method is asynchronous and accepts a [globby](https://github.com/sindresorhus/globby) glob, an `extract options` object (optional), and a callback. The method asynchronous extracts localizations from each file selected by the glob and combines them into a single `locale` object.
 
 ```js
@@ -132,7 +125,6 @@ var locale = s18n.extract(html, function(err, locale){
 ```
 
 ### Extract Options
-
 S18n's default extraction options will be ideal for most sites and applications, but advanced customization is possible.
 
 #### elements
@@ -201,43 +193,79 @@ S18n will use this algorithm to take the hash of each string. `hashAlgorithm` ac
 S18n will truncate hashes to this length when indexing strings in the `locale` object.
 
 ## Localize
-
 To localize html, s18n searches through the html for strings in the `nativeLocale`, replacing them with the localized strings in each locale. S18n only matches strings in locations from which they could have been extracted (between `""`, `''`, and `><`) to avoid translating unintended strings.
 
 ### s18n(html, [options])
-
 The s18n method accepts an html string, a `nativeLocale`, and a `locales` object of translated `locale` objects.
+
+### Localize Settings
+Both the `nativeLocale` and `locale` (or `locales`) settings are required.
+
+#### nativeLocale
+- Accepts: _locale object_
+- Required
+
+The `nativeLocale` is the `locale` object returned by the `extract()` or `extractFiles()` methods. The `s18n()` method searches the html for strings in the `nativeLocale`, and replaces them with translated strings from the `locale` or `locales` setting.
+
+#### locale _or_ locales
+- Accepts: _locale Object_ or _locales Object_
+- Required
+
+The `s18n()` method requires either the `locale` or `locales` setting.
+
+##### locale
+The `locale` setting accepts a single, translated `locale` object. When the `locale` settings is used, `s18n()` returns a single localized html string.
 
 ```js
 var s18n = require('s18n');
-
 var html = '<title>foo</title><img alt="bar"><foo s18n>baz</foo>';
-
-var options = {
+var settings = {
   nativeLocale: s18n.extract(html);
-  locales: {
-    'ac': { "acbd18db": "fóó", "37b51d19": "bár", "73feffa4": "báz" }
+  locale: {
+    "acbd18db": "fóó",
+    "37b51d19": "bár",
+    "73feffa4": "báz"
   }
 };
 
-var content = s18n(html, options);
+var content = s18n(html, settings);
 ```
 
 The `content` object:
+
+```js
+'<title>fóó</title><img alt="bár"><foo s18n>báz</foo>'
+```
+
+##### locales
+The `locales` settings accepts a `locales` object. The `locales` object keys are locale ids, and the values are their respective `locale` objects. When the `locales` settings is used, `s18n()` returns an object with locale id keys mapped to translated html strings.
+
+```js
+var s18n = require('s18n');
+var html = '<title>foo</title><img alt="bar"><foo s18n>baz</foo>';
+var settings = {
+  nativeLocale: s18n.extract(html);
+  locales: {
+    'ac': { "acbd18db": "fóó", "37b51d19": "bár", "73feffa4": "báz" }
+    'a2': { "acbd18db": "fó2", "37b51d19": "bá2", "73feffa4": "bá2" }
+  }
+};
+
+var content = s18n(html, settings);
+```
+
+The `content` object:
+
 ```js
 {
   'ac': '<title>fóó</title><img alt="bár"><foo s18n>báz</foo>'
+  'a2': '<title>fó2</title><img alt="bá2"><foo s18n>bá2</foo>'
 }
 ```
 
-#### Localize Options
-
 ## Testing Localization
-
 ### Map
-
 ### s18n.map(locale, options)
-
 
 ```js
 var s18n = require('s18n');
@@ -254,28 +282,18 @@ var test = s18n.map(locale, { dictionary: 'accents' });
   "acbd18db": "fóó",
   "37b51d19": "bár"
 }
-
 ```
 
 ## Utilities
-
-
 ### s18n.compareLocales(localeA, localeB, [options])
-
 ### s18n.formatLocale(locale, [options])
-
 #### options
-
 ##### output *(string)*
-
 Options: `string`, `object`
 
 Default: `object`
 
-
-Contributing
-============
-
+# Contributing
 The default Gulp task watches all files and runs tests and code coverage.
 
 ```bash
@@ -283,14 +301,10 @@ $ npm install -g gulp
 $ gulp
 ```
 
-Testing
--------
-
+## Testing
 This module strives to maintain passing tests with 100% coverage in every commit, and tests are run pre-commit. If you prefer, you can always skip this check with `git commit --no-verify` and squash WIP commits for pull requests later.
 
 If you're unsure or would like help writing tests or getting to 100% coverage, please don't hesitate to open up a pull request so others can help!
 
-Thanks
-------
-
+## Thanks
 Thanks to [Stephen Pair](https://github.com/gasteve) of [bitpay/translations](https://github.com/bitpay/translations) for some of the architectural inspiration behind s18n. This module builds on the idea of using truncated hashes as identifiers for translatable strings, rather than manually developed indexes.
