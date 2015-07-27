@@ -39,7 +39,7 @@ The following `locale` is saved to `en.json`:
 This locale can be translated – or for testing, s18n mapped to a simulated locale:
 
 ```bash
-$ s18n map 'en.json' -c 'fr' --dictionary 'accents'
+$ s18n map 'en.json' > 'fr.json'
 ```
 
 Producing `fr.json`:
@@ -90,7 +90,7 @@ $ npm install s18n
 
 ## Extracting the Native Locale
 
-S18n parses html content and extracts strings from selected html elements and attributes. A hash of each string is used to identify it, and each hash-string pair is stored in a `locale` object.
+S18n parses html content and extracts strings from selected html elements and attributes. A hash of each string is used to identify it, and all hash-string pairs are stored in a `locale` object.
 
 ### s18n.extract(html, [extract options])
 
@@ -103,13 +103,12 @@ var html = '<title>foo</title>' +
            '<img alt="bar">' +
            '<foo s18n>baz</foo>';
 
-var locale = s18n.extract(html, {
-    elements: ['title'],
-    attributes: ['alt'],
-    directives: ['s18n'],
-});
+var locale = s18n.extract(html);
+```
 
-// locale =>
+The `locale` object:
+
+```json
 {
   "acbd18db": "foo",
   "37b51d19": "bar",
@@ -117,17 +116,18 @@ var locale = s18n.extract(html, {
 }
 ```
 
-### s18n.extractFiles(glob, [extract options,] callback)
-#### callback(error, locale)
+### s18n.extractFiles(glob, [extract options,] callback(err, locale))
 
 The extract method is asynchronous and accepts a [globby](https://github.com/sindresorhus/globby) glob, an `extract options` object (optional), and a callback. The method asynchronous extracts localizations from each file selected by the glob and combines them into a single `locale` object.
 
 ```js
 var s18n = require('s18n');
+
 var htmlFiles = 'src/**/*.html';
 
-var locale = s18n.extract(html, function(error, locale){
-
+var locale = s18n.extract(html, function(err, locale){
+  if(err) log.error(err);
+  myApp.updateNativeLocale(locale);
 });
 ```
 
@@ -202,34 +202,35 @@ S18n will truncate hashes to this length when indexing strings in the `locale` o
 
 ## Localize
 
+To localize html, s18n searches through the html for strings in the `nativeLocale`, replacing them with the localized strings in each locale. S18n only matches strings in locations from which they could have been extracted (between `""`, `''`, and `><`) to avoid translating unintended strings.
+
 ### s18n(html, [options])
+
+The s18n method accepts an html string, a `nativeLocale`, and a `locales` object of translated `locale` objects.
 
 ```js
 var s18n = require('s18n');
 
-var html = '<title>foo</title>' +
-           '<img alt="bar">' +
-           '<foo s18n>baz</foo>';
+var html = '<title>foo</title><img alt="bar"><foo s18n>baz</foo>';
 
 var options = {
   nativeLocale: s18n.extract(html);
   locales: {
-    'ac': {
-      "acbd18db": "fóó",
-      "37b51d19": "bár",
-      "73feffa4": "báz"
-    }
+    'ac': { "acbd18db": "fóó", "37b51d19": "bár", "73feffa4": "báz" }
   }
 };
 
 var content = s18n(html, options);
-
-// content =>
-{
-  'ac' : '<title>fóó</title><img alt="bár"><foo s18n>báz</foo>'
-}
-
 ```
+
+The `content` object:
+```js
+{
+  'ac': '<title>fóó</title><img alt="bár"><foo s18n>báz</foo>'
+}
+```
+
+#### Localize Options
 
 ## Testing Localization
 
