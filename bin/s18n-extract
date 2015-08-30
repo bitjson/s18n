@@ -12,7 +12,8 @@ program
   .option('-p, --paths [paths]', 'paths or patterns (globby) to find parsable html files [default: "**/*.html"]')
   .option('-s, --string <html>', 'extract from string of parsable html')
   .option('--hash <algo>', 'hashing algorithm to calculate string IDs [default: md5]')
-  .option('--length <length>', 'length of string IDs [default: 8]');
+  .option('--length <length>', 'length of string IDs [default: 8]')
+  .option('--format <type>', 'format in which to return the locale, "object" or (JSON) "string" [default: "string"]');
 
 program.on('--help', function() {
   console.log('  Examples:');
@@ -45,14 +46,15 @@ if (program.string && program.paths) {
 }
 
 var options = {
-  stringify: true
+  format: 'string'
 },
   map = {
     attributes: 'attributes',
     directives: 'directives',
     elements: 'elements',
     hash: 'hashAlgorithm',
-    length: 'hashLength'
+    length: 'hashLength',
+    format: 'output'
   };
 
 for (var key in map) {
@@ -68,7 +70,9 @@ if (program.string) {
     program.paths = '**/*.html';
   }
   s18n.extractFiles(program.paths, options, function(err, locale){
-    console.error(err);
+    if(err){
+      console.error(err);
+    }
     console.log(locale);
   });
 }

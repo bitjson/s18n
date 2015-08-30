@@ -198,6 +198,12 @@ S18n will truncate hashes to this length when indexing strings in the `locale` o
 
 S18n will trim whitespace from each string (using javascript's `String.prototype.trim()`) if this option is set to `true`. This ensures matching phrases aren't treated as unique strings due to surrounding whitespace.
 
+#### output
+- Accepts: `object` or `string`
+- Default: `object`
+
+Based on this option, the `extract` method returns the extracted locale as a javascript object or as a formatted JSON string.
+
 ## Localize
 To localize html, s18n searches through the html for strings in the `nativeLocale`, replacing them with the localized strings in each locale. S18n only matches strings in locations from which they could have been extracted (between `""`, `''`, and `><`) to avoid translating unintended strings.
 
