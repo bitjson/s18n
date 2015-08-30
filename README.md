@@ -129,7 +129,7 @@ S18n's default extraction options will be ideal for most sites and applications,
 
 #### elements
 - Accepts: _String_, _Array of Strings_
-- Default: `['title', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']`
+- Default: `['title', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'small', 'a', 'button']`
 
 S18n will extract the full contents of all selected elements.
 
