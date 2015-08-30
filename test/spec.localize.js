@@ -121,6 +121,25 @@ describe('s18n()', function() {
     });
   });
 
+  it('should preserve and ignore insignificant whitespace when localizing', function() {
+    var html = '< test test = "  test\n" testattr = \'  \t test \'> test\r \t</ test >';
+    var nativeLocale = {
+      '098f6bcd': 'test'
+    };
+    var accentedLocale = {
+      '098f6bcd': 'tést'
+    };
+    var localizedHtml = s18n(html, {
+      nativeLocale: nativeLocale,
+      locales: {
+        'accents': accentedLocale
+      }
+    });
+    assert.deepEqual(localizedHtml, {
+      accents: '< test test = "  tést\n" testattr = \'  \t tést \'> tést\r \t</ test >'
+    });
+  });
+
   it('should localize some html with multiple locales', function() {
     var html = '<p>This is a test.</p>';
     var localizedHtml = s18n(html, {
