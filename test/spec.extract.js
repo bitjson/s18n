@@ -30,7 +30,7 @@ describe('s18n.extract()', function() {
     });
   });
 
-  it('leave whitespace when trimWhitespace is false', function() {
+  it('should leave surrounding whitespace when trimWhitespace is false', function() {
     var html = '<p> test   </p><p>test</p>';
     var locale = s18n.extract(html, {
       elements: ['p'],
@@ -39,6 +39,16 @@ describe('s18n.extract()', function() {
     assert.deepEqual(locale, {
       '098f6bcd': 'test',
       '2adbb831': ' test   '
+    });
+  });
+
+  it('should not include empty strings in extracted locale', function() {
+    var html = '<p>test</p><p></p>';
+    var locale = s18n.extract(html, {
+      elements: ['p']
+    });
+    assert.deepEqual(locale, {
+      '098f6bcd': 'test'
     });
   });
 
