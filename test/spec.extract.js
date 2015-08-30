@@ -20,6 +20,28 @@ describe('s18n.extract()', function() {
     });
   });
 
+  it('should trimWhitespace from strings by default', function() {
+    var html = '<p> test   </p><p>test</p>';
+    var locale = s18n.extract(html, {
+      elements: ['p']
+    });
+    assert.deepEqual(locale, {
+      '098f6bcd': 'test'
+    });
+  });
+
+  it('leave whitespace when trimWhitespace is false', function() {
+    var html = '<p> test   </p><p>test</p>';
+    var locale = s18n.extract(html, {
+      elements: ['p'],
+      trimWhitespace: false
+    });
+    assert.deepEqual(locale, {
+      '098f6bcd': 'test',
+      '2adbb831': ' test   '
+    });
+  });
+
   it('should extract locale strings from configured html attributes', function() {
     var html = '<img src="example.gif" data-custom="custom attribute">';
     var locale = s18n.extract(html, {

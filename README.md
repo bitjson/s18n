@@ -192,6 +192,12 @@ S18n will use this algorithm to take the hash of each string. `hashAlgorithm` ac
 
 S18n will truncate hashes to this length when indexing strings in the `locale` object.
 
+#### trimWhitespace
+- Accepts: `true` or `false`
+- Default: `true`
+
+S18n will trim whitespace from each string (using javascript's `String.prototype.trim()`) if this option is set to `true`. This ensures matching phrases aren't treated as unique strings due to surrounding whitespace.
+
 ## Localize
 To localize html, s18n searches through the html for strings in the `nativeLocale`, replacing them with the localized strings in each locale. S18n only matches strings in locations from which they could have been extracted (between `""`, `''`, and `><`) to avoid translating unintended strings.
 
