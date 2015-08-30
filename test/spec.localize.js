@@ -140,6 +140,23 @@ describe('s18n()', function() {
     });
   });
 
+  it('should localize the longest match when multiple locale strings match', function() {
+    var html = '<p>This is a test <a href="#">link</a>.</p>';
+    var nativeLocale = {
+      '2a304a13': 'link',
+      '455a8735': 'This is a test <a href="#">link</a>.'
+    };
+    var accentedLocale = {
+      '2a304a13': 'whích fáíléd',
+      '455a8735': 'Thís ís á tést <a href="#">línk</a>.'
+    };
+    var localizedHtml = s18n(html, {
+      nativeLocale: nativeLocale,
+      locale: accentedLocale
+    });
+    assert.equal(localizedHtml, '<p>Thís ís á tést <a href="#">línk</a>.</p>');
+  });
+
   it('should localize some html with multiple locales', function() {
     var html = '<p>This is a test.</p>';
     var localizedHtml = s18n(html, {
