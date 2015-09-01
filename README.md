@@ -73,8 +73,9 @@ $ npm install -g s18n
 For CLI usage information:
 
 ```bash
-$ s18n --help
+$ s18n
 $ s18n extract --help
+$ s18n localize --help
 $ s18n map --help
 ```
 

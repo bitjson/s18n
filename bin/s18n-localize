@@ -1,0 +1,141 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var program = require('commander');
+var globby = require('globby');
+var fs = require('fs');
+var async = require('async');
+var mkdirp = require('mkdirp');
+var getDirName = require('path').dirname;
+var s18n = require('../');
+
+program
+  .option('-l, --locales <paths>', 'paths or patterns (globby) to set locale files [default: "locales/*.json"]')
+  .option('-n, --native <path>', 'path to native locale file [default: "locales/en.json"]')
+  .option('-p, --paths [paths]', 'paths or patterns (globby) to find localizable html files [default: "**/*.html"]')
+  .option('-o, --output <path>', 'directory in which to output localized html files [default: "./"]')
+  .option('-q, --quiet', 'suppress logging information');
+
+program.on('--help', function() {
+  console.log('  Examples:');
+  console.log('');
+  console.log('    $ s18n localize -n "locales/de.json"');
+  console.log('    $ s18n localize -l "[\'locales/**/*.json\', \'!locales/disabled/**\'" -o "../www/"');
+  console.log('    $ s18n localize -p "[\'app/**/*.html\',\'vendor/**/*.html\']"');
+  console.log('    $ s18n localize -q');
+  console.log('');
+});
+
+program.parse(process.argv);
+
+
+// set defaults
+var options = {
+  locales: 'locales/*.json',
+  native: 'locales/en.json',
+  paths: '**/*.html',
+  output: './',
+  quiet: false
+};
+
+// override defaults with user input
+for (var id in options) {
+  if (program[id]) {
+    options[id] = program[id];
+  }
+}
+
+var nativeLocaleId = options.native.split('/').pop().split('.').shift();
+var nativeLocale = JSON.parse(fs.readFileSync(options.native, 'utf8'));
+var outputDir = options.output;
+var htmlPaths = globby.sync(options.paths);
+var localeFiles = globby.sync(options.locales);
+var htmlContents = [];
+var locales = {};
+
+async.parallel([
+  function(nativeHtmlLoaded) {
+    async.map(htmlPaths, function(file, cb) {
+      fs.readFile(file, 'utf8', cb);
+    }, function(err, results) {
+      logError(err);
+      for (var i = 0; i < localeFiles.length; i++) {
+        htmlContents.push({
+          path: htmlPaths[i],
+          content: results[i]
+        });
+      }
+      nativeHtmlLoaded();
+    });
+  },
+  function(localesLoaded) {
+    async.map(localeFiles, function(file, cb) {
+      fs.readFile(file, 'utf8', cb);
+    }, function(err, results) {
+      logError(err);
+      for (var i = 0; i < localeFiles.length; i++) {
+        var localeId = localeFiles[i].split('/').pop().split('.').shift();
+        if (localeId !== nativeLocaleId) {
+          locales[localeId] = JSON.parse(results[i]);
+        }
+      }
+      localesLoaded();
+    });
+  }
+], function() {
+  //htmlContent and locales have been retrieved, begin localization and write
+  async.map(htmlContents, function(nativeFile, nativeFileFullyLocalized) {
+    var nativePath = nativeFile.path;
+    var nativeContent = nativeFile.content;
+    var localizedContent = s18n(nativeContent, {
+      nativeLocale: nativeLocale,
+      locales: locales
+    });
+    var localizedContentArray = [];
+    for (var locale in localizedContent) {
+      localizedContentArray.push({
+        localeId: locale,
+        content: localizedContent[locale]
+      });
+    }
+    async.map(localizedContentArray, function(localizedFile, wroteLocalizedFile) {
+      var localizedFilePath = outputDir + localizedFile.localeId + '/' + nativePath;
+      writeFile(localizedFilePath, localizedFile.content, function(err) {
+        logError(err);
+        verboseLog('Wrote localized file: ' + localizedFilePath);
+        wroteLocalizedFile();
+      });
+    }, function(err) {
+      logError(err);
+      verboseLog('Finished localization of native file: ' + nativePath);
+      nativeFileFullyLocalized();
+    });
+  }, function(err) {
+    logError(err);
+    verboseLog('Finished writing localized files.');
+  });
+});
+
+function verboseLog() {
+  if (!options.quiet) {
+    for(var key in arguments){
+      console.log(arguments[key]);
+    }
+  }
+}
+
+function logError(err) {
+  if (err) {
+    console.error(err);
+  }
+}
+
+function writeFile(path, contents, cb) {
+  mkdirp(getDirName(path), function(err) {
+    if (err) {
+      return cb(err);
+    }
+    fs.writeFile(path, contents, cb);
+  });
+}

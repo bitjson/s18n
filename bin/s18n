@@ -5,15 +5,12 @@
 var program = require('commander');
 
 program
-  .option('-l, --locales <paths>', 'paths or patterns (globby) to set locale files [default: "locales/*.json]')
-  .option('-n, --native <path>', 'path to native locale file [default: "locales/en.json]');
-
-program
   .version('0.0.1')
   .command('extract [options]', 'parse html and extract localizable strings from html files')
+  .command('localize [options]', 'localize the project')
   .command('map <file> [options]', 'find/replace characters/strings in a locale to simulate localization');
 
-program.on('--help', function(){
+program.on('--help', function() {
   console.log('  Examples:');
   console.log('');
   console.log('    $ s18n extract > "locales/en.json"');
@@ -23,7 +20,3 @@ program.on('--help', function(){
 });
 
 program.parse(process.argv);
-
-if(!process.argv.slice(2).length){
-  program.help();
-}
