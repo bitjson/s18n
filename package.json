@@ -1,6 +1,6 @@
 {
   "name": "s18n",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Semantic localization for html.",
   "main": "lib/s18n.js",
   "bin": {
@@ -16,12 +16,12 @@
     "url": "https://github.com/bitjson/s18n"
   },
   "keywords": [
-    "semantic",
+    "i18n",
+    "internationalization",
     "localize",
     "l10n",
     "translate",
-    "i18n",
-    "internationalization"
+    "semantic"
   ],
   "author": "Jason Dreyzehner <jason@dreyzehner.com>",
   "license": "MIT",
