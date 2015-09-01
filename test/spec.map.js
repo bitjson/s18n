@@ -49,4 +49,28 @@ describe('s18n.map()', function() {
     });
   });
 
+  it('should not replace characters within html tags', function() {
+    var locale = {
+      '553b0eb0': 'This is <a href="example.com" title="notranslate">a test</a>.'
+    };
+    var mappedLocale = s18n.map(locale, {
+      dictionary: 'accents'
+    });
+    assert.deepEqual(mappedLocale, {
+      '553b0eb0': 'Thís ís <a href="example.com" title="notranslate">á tést</a>.'
+    });
+  });
+
+  it('should not replace characters within html entites', function() {
+    var locale = {
+      '59d2e85b': 'Go to the test &rsaquo;'
+    };
+    var mappedLocale = s18n.map(locale, {
+      dictionary: 'accents'
+    });
+    assert.deepEqual(mappedLocale, {
+      '59d2e85b': 'Gó tó thé tést &rsaquo;'
+    });
+  });
+
 });
