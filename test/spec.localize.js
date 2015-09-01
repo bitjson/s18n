@@ -157,6 +157,36 @@ describe('s18n()', function() {
     assert.equal(localizedHtml, '<p>Thís ís á tést <a href="#">línk</a>.</p>');
   });
 
+  it('should ignore empty attributes in the native locale (output by htmlparser2)', function() {
+    var html = '<p>This is a test <button href="#" disabled>button</button>.</p>';
+    var nativeLocale = {
+      'c82e7e85': 'This is a test <button href="#" disabled="">button</button>.'
+    };
+    var accentedLocale = {
+      'c82e7e85': 'Thís ís á tést <button href="#" disabled="">búttón</button>.'
+    };
+    var localizedHtml = s18n(html, {
+      nativeLocale: nativeLocale,
+      locale: accentedLocale
+    });
+    assert.equal(localizedHtml, '<p>Thís ís á tést <button href="#" disabled="">búttón</button>.</p>');
+  });
+
+  it('should match extra spaces not in the native locale (due to htmlparser2-cleaned output)', function() {
+    var html = '<p>This is a test <  button  \n href="#" >button< /\tbutton >.</p>';
+    var nativeLocale = {
+      'c82e7e85': 'This is a test <button href="#">button</button>.'
+    };
+    var accentedLocale = {
+      'c82e7e85': 'Thís ís á tést <button href="#">búttón</button>.'
+    };
+    var localizedHtml = s18n(html, {
+      nativeLocale: nativeLocale,
+      locale: accentedLocale
+    });
+    assert.equal(localizedHtml, '<p>Thís ís á tést <button href="#">búttón</button>.</p>');
+  });
+
   it('should localize some html with multiple locales', function() {
     var html = '<p>This is a test.</p>';
     var localizedHtml = s18n(html, {
