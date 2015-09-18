@@ -132,7 +132,7 @@ describe('s18n.extract()', function() {
     var locale = s18n.extract(html);
     var count = 0;
     var ordered = ['String A', 'String B', 'String C'];
-    for(var number in locale){
+    for (var number in locale) {
       assert.equal(locale[number], ordered[count]);
       count++;
     }

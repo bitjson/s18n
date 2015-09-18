@@ -27,6 +27,25 @@ describe('s18n.map()', function() {
     });
   });
 
+  it('should replace substrings properly', function() {
+    var locale = {
+      'hash': 'testing one two three.'
+    };
+    var mappedLocale = s18n.map(locale, {
+      dictionary: {
+        'r': 'rr',
+        'rr': 'rrr',
+        'a': 'V',
+        'e': 'V',
+        'i': 'V',
+        'two': 'zwei'
+      }
+    });
+    assert.deepEqual(mappedLocale, {
+      'hash': 'tVstVng onV zwei thrrrVV.'
+    });
+  });
+
   it('should default to the `accents` dictionary', function() {
     var locale = {
       '3c82f755': 'This is a test.'
