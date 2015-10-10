@@ -29,6 +29,9 @@
     "url": "https://github.com/bitjson/s18n/issues"
   },
   "homepage": "https://github.com/bitjson/s18n",
+  "engines": {
+    "node": ">=0.10"
+  },
   "dependencies": {
     "async": "^1.4.0",
     "commander": "^2.8.1",
@@ -40,8 +43,10 @@
     "coveralls": "^2.11.3",
     "del": "^1.2.0",
     "gulp": "^3.9.0",
+    "gulp-cached": "^1.1.0",
     "gulp-if": "^1.2.5",
     "gulp-istanbul-enforcer": "^1.0.3",
+    "gulp-jscs": "^3.0.1",
     "gulp-jshint": "^1.11.2",
     "gulp-load-plugins": "^0.10.0",
     "gulp-mocha": "^2.1.3",

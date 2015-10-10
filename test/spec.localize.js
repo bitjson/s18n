@@ -3,10 +3,6 @@
 var assert = require('assert');
 var s18n = require('../');
 
-// var fixtures = {
-//   a: 'test/fixtures/a.html'
-// };
-
 describe('s18n()', function() {
 
   it('should be a method', function() {

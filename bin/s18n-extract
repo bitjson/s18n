@@ -47,15 +47,16 @@ if (program.string && program.paths) {
 
 var options = {
   format: 'string'
-},
-  map = {
-    attributes: 'attributes',
-    directives: 'directives',
-    elements: 'elements',
-    hash: 'hashAlgorithm',
-    length: 'hashLength',
-    format: 'output'
-  };
+};
+
+var map = {
+  attributes: 'attributes',
+  directives: 'directives',
+  elements: 'elements',
+  hash: 'hashAlgorithm',
+  length: 'hashLength',
+  format: 'output'
+};
 
 for (var key in map) {
   if (program[key]) {
@@ -66,11 +67,11 @@ for (var key in map) {
 if (program.string) {
   console.log(s18n.extract(program.string, options));
 } else {
-  if(!program.paths){
+  if (!program.paths) {
     program.paths = '**/*.html';
   }
-  s18n.extractFiles(program.paths, options, function(err, locale){
-    if(err){
+  s18n.extractFiles(program.paths, options, function(err, locale) {
+    if (err) {
       console.error(err);
     }
     console.log(locale);

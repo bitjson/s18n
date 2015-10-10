@@ -29,7 +29,6 @@ program.on('--help', function() {
 
 program.parse(process.argv);
 
-
 // set defaults
 var options = {
   locales: 'locales/*.json',

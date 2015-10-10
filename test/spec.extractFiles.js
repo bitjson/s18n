@@ -1,9 +1,9 @@
 'use strict';
 
-var assert = require('assert'),
-  proxyquire = require('proxyquire'),
-  sinon = require('sinon'),
-  s18n = require('../');
+var assert = require('assert');
+var proxyquire = require('proxyquire');
+var sinon = require('sinon');
+var s18n = require('../');
 
 var fixtures = {
   a: 'test/fixtures/a.html'
@@ -68,6 +68,5 @@ describe('s18n.extractFiles()', function() {
       done();
     });
   });
-
 
 });
