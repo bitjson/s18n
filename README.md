@@ -268,7 +268,8 @@ The `locales` settings accepts a `locales` object. The `locales` object keys are
 var s18n = require('s18n');
 var html = '<html lang="en"><title>foo</title><img alt="bar"><foo s18n>baz</foo></html>';
 var settings = {
-  nativeLocale: s18n.extract(html);
+  nativeLocale: s18n.extract(html),
+  nativeLocalId: 'en',
   locales: {
     'ac': { "acbd18db": "fóó", "37b51d19": "bár", "73feffa4": "báz" }
     'a2': { "acbd18db": "fó2", "37b51d19": "bá2", "73feffa4": "bá2" }
@@ -292,6 +293,11 @@ The `content` object:
 - Default: `true`
 
 When `rewriteLangAttribute` is true, the `s18n` method will replace `nativelLocaleId` with `localeId` in all html `lang` attributes. To make `s18n` output a `lang` attribute with the `nativelLocaleId` value, use the `s18n-lock-lang` attribute in the native html.
+
+```html
+<html lang="en">English speakers often use the word <code s18n-lock-lang="en">do</code>.</html>
+<html lang="de">Englisch-Lautsprecher verwenden oft das Wort <code lang="en">do</code>.</html>
+```
 
 #### nativeLocaleId
 - Accepts: _String_
