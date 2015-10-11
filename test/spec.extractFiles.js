@@ -1,7 +1,6 @@
 'use strict';
 
 var assert = require('assert');
-var sinon = require('sinon');
 var s18n = require('../');
 
 var fixtures = {
@@ -28,7 +27,6 @@ describe('s18n.extractFiles()', function() {
 
   it('should extract locale strings from multiple files', function() {
     return s18n.extractFiles(fixtures.b).then(function(locale) {
-      console.log('made2');
       assert.deepEqual(locale, {
         '37b51d19': 'bar',
         '224e2539': 'bar2',
@@ -59,11 +57,13 @@ describe('s18n.extractFiles()', function() {
     });
   });
 
-  it('should return fs errors properly', function() {
-    var stub = sinon.stub(require('fs'), 'readFile').callsArgWith(1, 'mock fs error');
-    return s18n.extractFiles(fixtures.a).catch(function(err) {
-      assert.equal(err, 'mock fs error');
-      stub.restore();
+  it('should reject on errors', function() {
+    return s18n.extractFiles(fixtures.a, {output: 'nope'})
+    .then(function(locale) {
+      throw new Error('Something is broken.');
+    })
+    .catch(function(err) {
+      assert.equal(err.toString(), new Error('Unrecognized `output` type').toString());
     });
   });
 
