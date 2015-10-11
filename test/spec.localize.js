@@ -9,7 +9,7 @@ describe('s18n()', function() {
     assert.equal(typeof s18n, 'function');
   });
 
-  it('should throw an error if nativeLocale option is undefined', function() {
+  it('should throw an error if `nativeLocale` option is undefined', function() {
     var html = '<p>This is a test.</p>';
     var accentedLocale = {
       '3c82f755': 'Thís ís á tést.'
@@ -26,7 +26,7 @@ describe('s18n()', function() {
       'unexpected error message');
   });
 
-  it('should throw an error if locales option is undefined', function() {
+  it('should throw an error if `locales` option is undefined', function() {
     var html = '<p>This is a test.</p>';
     var nativeLocale = {
       '3c82f755': 'This is a test.'
@@ -41,6 +41,46 @@ describe('s18n()', function() {
       'unexpected error message');
   });
 
+  it('should throw an error if `rewriteLangAttribute` is true and `nativeLocaleId` is not set', function() {
+    var html = '<p>This is a test.</p>';
+    var nativeLocale = {
+      '3c82f755': 'This is a test.'
+    };
+    var accentedLocale = {
+      '3c82f755': 'Thís ís á tést.'
+    };
+    assert.throws(
+      function() {
+        s18n(html, {
+          nativeLocale: nativeLocale,
+          locale: accentedLocale,
+          localeId: 'accents'
+        });
+      },
+      /`rewriteLangAttribute`/,
+      'unexpected error message');
+  });
+
+  it('should throw an error if `rewriteLangAttribute` is true and the `locale` option is used without `localeId` set', function() {
+    var html = '<p>This is a test.</p>';
+    var nativeLocale = {
+      '3c82f755': 'This is a test.'
+    };
+    var accentedLocale = {
+      '3c82f755': 'Thís ís á tést.'
+    };
+    assert.throws(
+      function() {
+        s18n(html, {
+          nativeLocale: nativeLocale,
+          nativeLocaleId: 'en',
+          locale: accentedLocale
+        });
+      },
+      /`rewriteLangAttribute`/,
+      'unexpected error message');
+  });
+
   it('should localize some html', function() {
     var html = '<p>This is a test.</p>';
     var nativeLocale = {
@@ -51,6 +91,7 @@ describe('s18n()', function() {
     };
     var localizedHtml = s18n(html, {
       nativeLocale: nativeLocale,
+      nativeLocaleId: 'en',
       locales: {
         'accents': accentedLocale
       }
@@ -70,9 +111,46 @@ describe('s18n()', function() {
     };
     var localizedHtml = s18n(html, {
       nativeLocale: nativeLocale,
-      locale: accentedLocale
+      locale: accentedLocale,
+      rewriteLangAttribute: false
     });
     assert.equal(localizedHtml, '<p>Thís ís á tést.</p>');
+  });
+
+  it('should rewrite `lang` attributes', function() {
+    var html = '<html lang= en><p>This is a test.</p></html>';
+    var nativeLocale = {
+      '3c82f755': 'This is a test.'
+    };
+    var accentedLocale = {
+      '3c82f755': 'Thís ís á tést.'
+    };
+    var localizedHtml = s18n(html, {
+      nativeLocale: nativeLocale,
+      nativeLocaleId: 'en',
+      locale: accentedLocale,
+      localeId: 'accents',
+      rewriteLangAttribute: true
+    });
+    assert.equal(localizedHtml, '<html lang= accents><p>Thís ís á tést.</p></html>');
+  });
+
+  it('should output the proper `lang` value when `s18n-lock-lang` is encountered', function() {
+    var html = '<html lang= en><p><em s18n-lock-lang="den">Zis</em> <em s18n-lock-lang="en">is</em> a <span s18n-lock-lang="">test</span>.</p></html>';
+    var nativeLocale = {
+      '3c82f755': '<em s18n-lock-lang="den">Zis</em> <em s18n-lock-lang="en">is</em> a <span s18n-lock-lang="">test</span>.'
+    };
+    var accentedLocale = {
+      '3c82f755': '<em s18n-lock-lang="den">Zís</em> <em s18n-lock-lang="en">ís</em> á <span s18n-lock-lang="">tést</span>.'
+    };
+    var localizedHtml = s18n(html, {
+      nativeLocale: nativeLocale,
+      nativeLocaleId: 'en',
+      locale: accentedLocale,
+      localeId: 'accents',
+      rewriteLangAttribute: true
+    });
+    assert.equal(localizedHtml, '<html lang= accents><p><em lang="den">Zís</em> <em lang="en">ís</em> á <span lang="">tést</span>.</p></html>');
   });
 
   it('should error if both `locale` and `locales` are set', function() {
@@ -99,7 +177,7 @@ describe('s18n()', function() {
   });
 
   it('should localize strings only in localizable places (/>*</, /"*"/, /\'*\'/)', function() {
-    var html = '<test test="test" testattr=\'test\'>test</test>';
+    var html = '<html lang="en"><test test="test" testattr=\'test\'>test</test></html>';
     var nativeLocale = {
       '098f6bcd': 'test'
     };
@@ -108,12 +186,13 @@ describe('s18n()', function() {
     };
     var localizedHtml = s18n(html, {
       nativeLocale: nativeLocale,
+      nativeLocaleId: 'en',
       locales: {
         'accents': accentedLocale
       }
     });
     assert.deepEqual(localizedHtml, {
-      accents: '<test test="tést" testattr=\'tést\'>tést</test>'
+      accents: '<html lang="accents"><test test="tést" testattr=\'tést\'>tést</test></html>'
     });
   });
 
@@ -129,7 +208,8 @@ describe('s18n()', function() {
       nativeLocale: nativeLocale,
       locales: {
         'accents': accentedLocale
-      }
+      },
+      rewriteLangAttribute: false
     });
     assert.deepEqual(localizedHtml, {
       accents: '< test test = "  tést\n" testattr = \'  \t tést \'> tést\r \t</ test >'
@@ -148,7 +228,8 @@ describe('s18n()', function() {
     };
     var localizedHtml = s18n(html, {
       nativeLocale: nativeLocale,
-      locale: accentedLocale
+      locale: accentedLocale,
+      rewriteLangAttribute: false
     });
     assert.equal(localizedHtml, '<p>Thís ís á tést <a href="#">línk</a>.</p>');
   });
@@ -163,7 +244,8 @@ describe('s18n()', function() {
     };
     var localizedHtml = s18n(html, {
       nativeLocale: nativeLocale,
-      locale: accentedLocale
+      locale: accentedLocale,
+      rewriteLangAttribute: false
     });
     assert.equal(localizedHtml, '<p>Thís ís á tést <button href="#" disabled="">búttón</button>.</p>');
   });
@@ -178,7 +260,8 @@ describe('s18n()', function() {
     };
     var localizedHtml = s18n(html, {
       nativeLocale: nativeLocale,
-      locale: accentedLocale
+      locale: accentedLocale,
+      rewriteLangAttribute: false
     });
     assert.equal(localizedHtml, '<p>Thís ís á tést <button href="#">búttón</button>.</p>');
   });
@@ -196,7 +279,8 @@ describe('s18n()', function() {
         'denglish': {
           '3c82f755': 'Zis ist a tesht.'
         }
-      }
+      },
+      rewriteLangAttribute: false
     });
     assert.deepEqual(localizedHtml, {
       accents: '<p>Thís ís á tést.</p>',

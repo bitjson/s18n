@@ -112,7 +112,7 @@ The `locale` object:
 ```
 
 ### s18n.extractFiles(glob, [extract options,] callback(err, locale))
-The extract method is asynchronous and accepts a [globby](https://github.com/sindresorhus/globby) glob, an `extract options` object (optional), and a callback. The method asynchronous extracts localizations from each file selected by the glob and combines them into a single `locale` object.
+The extract method is asynchronous and accepts a [globby](https://github.com/sindresorhus/globby) glob, an `extract options` object (optional), and a callback. The method asynchronously extracts localizations from each file selected by the glob and combines them into a single `locale` object.
 
 ```js
 var s18n = require('s18n');
@@ -233,18 +233,20 @@ The `nativeLocale` is the `locale` object returned by the `extract()` or `extrac
 The `s18n()` method requires either the `locale` or `locales` setting.
 
 ##### locale
-The `locale` setting accepts a single, translated `locale` object. When the `locale` settings is used, `s18n()` returns a single localized html string.
+The `locale` setting accepts a single, translated `locale` object. When the `locale` settings is used, `s18n()` returns a single localized html string. When `rewriteLangAttribute` is true (default), both `nativeLocalId` and `localeId` must be set.
 
 ```js
 var s18n = require('s18n');
-var html = '<title>foo</title><img alt="bar"><foo s18n>baz</foo>';
+var html = '<html lang="en"><title>foo</title><img alt="bar"><foo s18n>baz</foo></html>';
 var settings = {
-  nativeLocale: s18n.extract(html);
+  nativeLocale: s18n.extract(html),
+  nativeLocalId: 'en',
   locale: {
     "acbd18db": "fóó",
     "37b51d19": "bár",
     "73feffa4": "báz"
-  }
+  },
+  localeId: 'accents'
 };
 
 var content = s18n(html, settings);
@@ -253,7 +255,7 @@ var content = s18n(html, settings);
 The `content` object:
 
 ```js
-'<title>fóó</title><img alt="bár"><foo s18n>báz</foo>'
+'<html lang="accents"><title>fóó</title><img alt="bár"><foo s18n>báz</foo></html>'
 ```
 
 ##### locales
@@ -261,7 +263,7 @@ The `locales` settings accepts a `locales` object. The `locales` object keys are
 
 ```js
 var s18n = require('s18n');
-var html = '<title>foo</title><img alt="bar"><foo s18n>baz</foo>';
+var html = '<html lang="en"><title>foo</title><img alt="bar"><foo s18n>baz</foo></html>';
 var settings = {
   nativeLocale: s18n.extract(html);
   locales: {
@@ -277,10 +279,28 @@ The `content` object:
 
 ```js
 {
-  'ac': '<title>fóó</title><img alt="bár"><foo s18n>báz</foo>'
-  'a2': '<title>fó2</title><img alt="bá2"><foo s18n>bá2</foo>'
+  'ac': '<html lang="ac"><title>fóó</title><img alt="bár"><foo s18n>báz</foo></html>'
+  'a2': '<html lang="a2"><title>fó2</title><img alt="bá2"><foo s18n>bá2</foo></html>'
 }
 ```
+
+#### rewriteLangAttribute
+- Accepts: _Boolean_
+- Default: `true`
+
+When `rewriteLangAttribute` is true, the `s18n` method will replace `nativelLocaleId` with `localeId` in all html `lang` attributes. To make `s18n` output a `lang` attribute with the `nativelLocaleId` value, use the `s18n-lock-lang` attribute in the native html.
+
+#### nativeLocaleId
+- Accepts: _String_
+- Required when `locale` is used and `rewriteLangAttribute` is true
+
+The language code of the native document.
+
+#### localeId
+- Accepts: _String_
+- Required when `locale` is used and `rewriteLangAttribute` is true
+
+The language code of the locale being used to localize the document.
 
 ## Testing Localization
 ### Map
