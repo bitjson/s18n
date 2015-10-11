@@ -150,13 +150,19 @@ By default, the [W3C standard `translate=yes` attribute](http://www.w3.org/TR/20
 
 #### cancelers
 - Accepts: _String_, _Array of Strings_
-- Default: `['cancel-s18n', 'translate=no']`
+- Default: `'cancel-s18n'`
 
 S18n will not extract the contents of any elements with the following attributes. To cancel localization of elements with an attribute set to a certain value, use an `=` character between the directive and the necessary value.
 
-By default, the [W3C standard `translate=no` attribute](http://www.w3.org/TR/2013/CR-html5-20130806/dom.html#attr-translate) is honored.
-
 Cancelers take precedence over any setters/selectors.
+
+#### excluders
+- Accepts: _String_, _Array of Strings_
+- Default: `['s18n-exclude', 'translate=no']`
+
+S18n will completely ignore any elements with the following attributes, canceling localization of all sub-elements. To exclude localization of elements with an attribute set to a certain value, use an `=` character between the directive and the necessary value.
+
+By default, the [W3C standard `translate=no` attribute](http://www.w3.org/TR/2013/CR-html5-20130806/dom.html#attr-translate) is honored.
 
 #### attributeSetter
 - Accepts: _String_

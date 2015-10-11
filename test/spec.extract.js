@@ -107,6 +107,17 @@ describe('s18n.extract()', function() {
     });
   });
 
+  it('should not extract locale strings from withing excluded elements', function() {
+    var html = '<p>translate this</p><div translate="no"><p>not this</p></div><div><span s18n-exclude><p>or this</p></span></div>';
+    var locale = s18n.extract(html, {
+      elements: 'p',
+      excluders: ['s18n-exclude', 'translate=no']
+    });
+    assert.deepEqual(locale, {
+      '383a7007': 'translate this'
+    });
+  });
+
   it('should allow other hash algorithms', function() {
     var html = '<p>This is a test.</p>';
     var locale = s18n.extract(html, {
