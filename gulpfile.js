@@ -57,11 +57,8 @@ gulp.task('enforce-coverage', function() {
     .pipe($.istanbulEnforcer(options));
 });
 
-gulp.task('rm-coverage', function(cb) {
-  require('del')('coverage', function(err) {
-    if (err) {
-      console.error(err);
-    }
-    cb();
+gulp.task('rm-coverage', function() {
+  return require('del')('coverage').catch(function(err) {
+    console.error(err);
   });
 });

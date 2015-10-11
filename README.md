@@ -89,7 +89,7 @@ $ npm install s18n
 S18n parses html content and extracts strings from selected html elements and attributes. A hash of each string is used to identify it, and all hash-string pairs are stored in a `locale` object.
 
 ### s18n.extract(html, [extract options])
-The extract method accepts a string of html and (optionally) an `extract options` object. It returns a locale object.
+The `extract` method accepts a string of html and (optionally) an `extract options` object. It returns a locale object.
 
 ```js
 var s18n = require('s18n');
@@ -111,18 +111,21 @@ The `locale` object:
 }
 ```
 
-### s18n.extractFiles(glob, [extract options,] callback(err, locale))
-The extract method is asynchronous and accepts a [globby](https://github.com/sindresorhus/globby) glob, an `extract options` object (optional), and a callback. The method asynchronously extracts localizations from each file selected by the glob and combines them into a single `locale` object.
+### s18n.extractFiles(glob, [extract options]).then(function(locale))
+The `extractFiles` method is asynchronous and accepts a [globby](https://github.com/sindresorhus/globby) glob and an `extract options` object (optional) and returns a promise. The method asynchronously extracts localizations from each file selected by the glob and combines them into a single `locale` object.
 
 ```js
 var s18n = require('s18n');
 
 var htmlFiles = 'src/**/*.html';
 
-var locale = s18n.extract(html, function(err, locale){
-  if(err) log.error(err);
-  myApp.updateNativeLocale(locale);
-});
+var locale = s18n.extractFiles(htmlFiles)
+  .then(function(nativeLocale){
+    myApp.doSomething(nativeLocale);
+   })
+  .catch(function(err){
+    log.error(err);
+  });
 ```
 
 ### Extract Options
