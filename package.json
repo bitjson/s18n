@@ -42,7 +42,9 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.4",
+    "cz-conventional-changelog": "^1.1.5",
     "del": "^2.0.2",
+    "ghooks": "^1.2.1",
     "gulp": "^3.9.0",
     "gulp-cached": "^1.1.0",
     "gulp-if": "^2.0.0",
@@ -59,6 +61,19 @@
     "mocha-lcov-reporter": "1.2.0",
     "pre-commit": "^1.0.10",
     "run-sequence": "^1.1.4",
-    "sinon": "^1.17.1"
-  }
+    "sinon": "^1.17.1",
+    "validate-commit-msg": "^2.6.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    },
+    "ghooks": {
+      "commit-msg": "validate-commit-msg"
+    },
+    "validate-commit-msg": {
+      "helpMessage": "\nThis project uses commitizen to document changes. Please try:\nnpm install commitizen -g && git cz\n"
+    }
+  },
+  "pre-commit": "test"
 }
