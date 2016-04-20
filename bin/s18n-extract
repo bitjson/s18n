@@ -70,10 +70,5 @@ if (program.string) {
   if (!program.paths) {
     program.paths = '**/*.html';
   }
-  s18n.extractFiles(program.paths, options, function(err, locale) {
-    if (err) {
-      console.error(err);
-    }
-    console.log(locale);
-  });
+  s18n.extractFiles(program.paths, options).then(console.log, console.error);
 }
