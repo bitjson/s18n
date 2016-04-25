@@ -11,18 +11,18 @@ var getDirName = require('path').dirname;
 var s18n = require('../');
 
 program
-  .option('-l, --locales <paths>', 'paths or patterns (globby) to set locale files [default: "locales/*.json"]')
-  .option('-n, --native <path>', 'path to native locale file [default: "locales/en.json"]')
-  .option('-p, --paths [paths]', 'paths or patterns (globby) to find localizable html files [default: "**/*.html"]')
-  .option('-o, --output <path>', 'directory in which to output localized html files [default: "./"]')
+  .option('-l, --locales <paths>', 'paths or patterns (globby) to set locale files [default: \'locales/*.json\']')
+  .option('-n, --native <path>', 'path to native locale file [default: \'locales/en.json\']')
+  .option('-p, --paths [paths]', 'paths or patterns (globby) to find localizable html files [default: \'**/*.html\']')
+  .option('-o, --output <path>', 'directory in which to output localized html files [default: \'./\']')
   .option('-q, --quiet', 'suppress logging information');
 
 program.on('--help', function() {
   console.log('  Examples:');
   console.log('');
-  console.log('    $ s18n localize -n "locales/de.json"');
-  console.log('    $ s18n localize -l "[\'locales/**/*.json\', \'!locales/disabled/**\'" -o "../www/"');
-  console.log('    $ s18n localize -p "[\'app/**/*.html\',\'vendor/**/*.html\']"');
+  console.log('    $ s18n localize -n \'locales/de.json\'');
+  console.log('    $ s18n localize -l \'["locales/**/*.json", "!locales/disabled/**"]\' -o \'../www/\'');
+  console.log('    $ s18n localize -p \'["app/**/*.html", "vendor/**/*.html"]\'');
   console.log('    $ s18n localize -q');
   console.log('');
 });

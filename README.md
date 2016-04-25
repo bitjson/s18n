@@ -62,7 +62,7 @@ $ s18n 'original.html' -l 'fr.json' > 'translated.html'
 ```
 
 # Command-Line Interface
-**Please note**: not all documented CLI options are fully implemented yet, and CLI scripts are also not currently included in test coverage. Pull requests welcome!
+**Please note**: some CLI options are not yet implemented for the `map` command. Pull requests welcome!
 
 To access the CLI system-wide, s18n can be installed globally using [npm](https://docs.npmjs.com/getting-started/installing-node):
 
@@ -78,6 +78,8 @@ $ s18n extract --help
 $ s18n localize --help
 $ s18n map --help
 ```
+
+CLI tests are not currently included in test coverage.
 
 # Node API
 

@@ -6,20 +6,20 @@ var program = require('commander');
 var s18n = require('../');
 
 program
-  .option('-a, --attributes [attrs]', 'html attributes to localize [default: "alt,title" | none: "."]')
-  .option('-d, --directives [dirs]', 'html attributes to mark elements for localization [default: "localize" | none: "."]')
-  .option('-e, --elements [elems]', 'html elements to localize [default: "title,p,h1,h2,h3,h4,h5,h6" | none: "."]')
-  .option('-p, --paths [paths]', 'paths or patterns (globby) to find parsable html files [default: "**/*.html"]')
+  .option('-a, --attributes [attrs]', 'html attributes to localize [default: \'alt,title\' | none: \'.\']')
+  .option('-d, --directives [dirs]', 'html attributes to mark elements for localization [default: \'localize\' | none: \'.\']')
+  .option('-e, --elements [elems]', 'html elements to localize [default: \'title,p,h1,h2,h3,h4,h5,h6\' | none: \'.\']')
+  .option('-p, --paths [paths]', 'JSON array of paths or patterns (globby) to find parsable html files [default: \'["**/*.html"]\']')
   .option('-s, --string <html>', 'extract from string of parsable html')
   .option('--hash <algo>', 'hashing algorithm to calculate string IDs [default: md5]')
   .option('--length <length>', 'length of string IDs [default: 8]')
-  .option('--format <type>', 'format in which to return the locale, "object" or (JSON) "string" [default: "string"]');
+  .option('--format <type>', 'format in which to return the locale, "object" or (JSON) "string" [default: \'string\']');
 
 program.on('--help', function() {
   console.log('  Examples:');
   console.log('');
-  console.log('    $ s18n extract -s "<p>Hello, World!</p>"');
-  console.log('    $ s18n extract -p "**/*.html, !notranslate/*.html"');
+  console.log('    $ s18n extract -s \'<p>Hello, World!</p>\'');
+  console.log('    $ s18n extract -p \'["**/*.html", "!notranslate/*.html"]\'');
   console.log('    $ s18n extract -a . -e . -d translate=yes');
   console.log('    $ s18n extract > locales/en.json');
   console.log('');
@@ -32,7 +32,7 @@ if (typeof program.args !== 'undefined' && program.args.length > 0) {
   console.log('Unrecognized arguement. Try placing quotes around arguements.');
   console.log('');
   console.log('E.g.:');
-  console.log('$ s18n extract -e "p, div"');
+  console.log('$ s18n extract -e \'p, div\'');
   program.help('');
 }
 
@@ -41,7 +41,7 @@ if (program.string && program.paths) {
   console.log('Both the paths and string arguments are set. Please choose a single extraction source.');
   console.log('');
   console.log('E.g.:');
-  console.log('$ s18n extract -e "p, div"');
+  console.log('$ s18n extract -e \'p, div\'');
   program.help('');
 }
 
@@ -69,6 +69,8 @@ if (program.string) {
 } else {
   if (!program.paths) {
     program.paths = '**/*.html';
+  } else {
+    program.paths = JSON.parse(program.paths);
   }
   s18n.extractFiles(program.paths, options).then(console.log, console.error);
 }

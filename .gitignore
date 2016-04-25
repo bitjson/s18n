@@ -3,3 +3,4 @@
 .idea
 node_modules
 coverage
+test/fixtures/sample/accents
