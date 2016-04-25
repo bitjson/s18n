@@ -46,7 +46,7 @@ if (program.string && program.paths) {
 }
 
 var options = {
-  format: 'string'
+  output: 'string'
 };
 
 var map = {
