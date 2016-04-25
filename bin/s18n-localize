@@ -59,7 +59,7 @@ async.parallel([
       fs.readFile(file, 'utf8', cb);
     }, function(err, results) {
       logError(err);
-      for (var i = 0; i < localeFiles.length; i++) {
+      for (var i = 0; i < htmlPaths.length; i++) {
         htmlContents.push({
           path: htmlPaths[i],
           content: results[i]
@@ -89,6 +89,7 @@ async.parallel([
     var nativeContent = nativeFile.content;
     var localizedContent = s18n(nativeContent, {
       nativeLocale: nativeLocale,
+      nativeLocaleId: nativeLocaleId,
       locales: locales
     });
     var localizedContentArray = [];
