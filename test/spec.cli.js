@@ -8,14 +8,14 @@ describe('CLI: \'s18n\'', function() {
 
   it('should return usage when no command is provided', function(done) {
     exec(cli(), function(err, out, stderr) {
-      assert(out.includes('Usage: s18n [options] [command]'));
+      assert(out.indexOf('Usage: s18n [options] [command]') !== -1);
       done();
     });
   });
 
   it('should return the current version', function(done) {
     exec(cli('--version'), function(err, out, stderr) {
-      assert(out.includes(require('../package.json').version));
+      assert(out.indexOf(require('../package.json').version) !== -1);
       done();
     });
   });
