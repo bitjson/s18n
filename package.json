@@ -33,6 +33,7 @@
     "node": ">=0.10"
   },
   "dependencies": {
+    "async": "^2.0.0-rc.3",
     "commander": "^2.8.1",
     "globby": "^4.0.0",
     "htmlparser2": "^3.8.3",
