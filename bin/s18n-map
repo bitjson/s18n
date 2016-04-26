@@ -9,17 +9,17 @@ var s18n = require('../');
 program
   .usage('<file>', 'locale file to map')
   .option('-c, --codes [codes]', 'output a "CODE.json" locale for each code, outputs to stdout by default')
-  .option('-d, --dictionary (<map> | <file>)', 'a json object of find/replace mappings [default: "accents"]')
-  .option('-l, --locales <dir>', 'directory to output mapped locales [default: "./"]');
+  .option('-d, --dictionary (<map> | <file>)', 'a json object of find/replace mappings [default: \'accents\']')
+  .option('-l, --locales <dir>', 'directory to output mapped locales [default: \'./\']');
 
 program.on('--help', function() {
   console.log('  Examples:');
   console.log('');
-  console.log('    $ s18n map "en.json"');
-  console.log('    $ s18n map "en.json" -c fr,es,de');
-  console.log('    $ s18n map "locales/en.json" -l "locales" -c fr,es,de');
-  console.log('    $ s18n map "en.json" -d leet');
-  console.log('    $ s18n map "en.json" -d "dict.json"');
+  console.log('    $ s18n map \'en.json\'');
+  console.log('    $ s18n map \'en.json\' -c fr,es,de');
+  console.log('    $ s18n map \'locales/en.json\' -l \'locales\' -c fr,es,de');
+  console.log('    $ s18n map \'en.json\' -d leet');
+  console.log('    $ s18n map \'en.json\' -d \'dict.json\'');
   console.log('');
 });
 
@@ -34,7 +34,7 @@ if (typeof program.args !== 'undefined' && program.args.length > 1) {
   console.log('Unrecognized arguement. Try placing quotes around arguements.');
   console.log('');
   console.log('E.g.:');
-  console.log('$ s18n map "en.json" -c "fr, es, de"');
+  console.log('$ s18n map \'en.json\' -c \'fr, es, de\'');
   program.help('');
 }
 

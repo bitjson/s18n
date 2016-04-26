@@ -3,9 +3,12 @@
 'use strict';
 
 var program = require('commander');
+var pkg = require('../package.json');
+var updateNotifier = require('update-notifier');
+updateNotifier({pkg: pkg}).notify();
 
 program
-  .version('0.0.1')
+  .version(pkg.version)
   .command('extract [options]', 'parse html and extract localizable strings from html files')
   .command('localize [options]', 'localize the project')
   .command('map <file> [options]', 'find/replace characters/strings in a locale to simulate localization');
@@ -13,8 +16,8 @@ program
 program.on('--help', function() {
   console.log('  Examples:');
   console.log('');
-  console.log('    $ s18n extract > "locales/en.json"');
-  console.log('    $ s18n map "locales/en.json" -l "locales" -c fr,es,de');
+  console.log('    $ s18n extract > \'locales/en.json\'');
+  console.log('    $ s18n map \'locales/en.json\' -l \'locales\' -c fr,es,de');
   console.log('    $ s18n -n locales/de.json');
   console.log('');
 });
