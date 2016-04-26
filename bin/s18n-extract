@@ -8,7 +8,7 @@ var s18n = require('../');
 program
   .option('-a, --attributes [attrs]', 'html attributes to localize [default: \'alt,title\' | none: \'.\']')
   .option('-d, --directives [dirs]', 'html attributes to mark elements for localization [default: \'localize\' | none: \'.\']')
-  .option('-e, --elements [elems]', 'html elements to localize [default: \'title,p,h1,h2,h3,h4,h5,h6\' | none: \'.\']')
+  .option('-e, --elements [elems]', 'html elements to localize [default: \'title,h1,h2,h3,h4,h5,h6,p,small,a,button\' | none: \'.\']')
   .option('-p, --paths [paths]', 'JSON array of paths or patterns (globby) to find parsable html files [default: \'["**/*.html"]\']')
   .option('-s, --string <html>', 'extract from string of parsable html')
   .option('--hash <algo>', 'hashing algorithm to calculate string IDs [default: md5]')
