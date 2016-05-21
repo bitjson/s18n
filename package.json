@@ -40,7 +40,7 @@
     "mkdirp": "^0.5.1",
     "pify": "^2.2.0",
     "pinkie-promise": "^2.0.0",
-    "update-notifier": "^0.6.3"
+    "update-notifier": "^0.7.0"
   },
   "devDependencies": {
     "coveralls": "^2.11.4",
