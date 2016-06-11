@@ -35,7 +35,7 @@
   "dependencies": {
     "async": "^2.0.0-rc.3",
     "commander": "^2.8.1",
-    "globby": "^4.0.0",
+    "globby": "^5.0.0",
     "htmlparser2": "^3.8.3",
     "mkdirp": "^0.5.1",
     "pify": "^2.2.0",
