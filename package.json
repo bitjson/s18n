@@ -59,7 +59,7 @@
     "istanbul": "^0.4.2",
     "jshint": "^2.9.1",
     "jshint-stylish": "^2.0.1",
-    "mocha": "^2.3.3",
+    "mocha": "^3.1.2",
     "mocha-lcov-reporter": "1.2.0",
     "pre-commit": "^1.0.10",
     "run-sequence": "^1.1.4",
