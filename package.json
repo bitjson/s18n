@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/bitjson/s18n",
   "engines": {
-    "node": ">=0.10"
+    "node": ">= 4"
   },
   "dependencies": {
     "async": "^2.0.0-rc.3",
