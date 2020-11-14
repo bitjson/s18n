@@ -13,7 +13,8 @@ program
   .option('-s, --string <html>', 'extract from string of parsable html')
   .option('--hash <algo>', 'hashing algorithm to calculate string IDs [default: md5]')
   .option('--length <length>', 'length of string IDs [default: 8]')
-  .option('--format <type>', 'format in which to return the locale, "object" or (JSON) "string" [default: \'string\']');
+  .option('--format <type>', 'format in which to return the locale, "object" or (JSON) "string" [default: \'string\']')
+  .option('--unsorted', 'return an unsorted extracted locale');
 
 program.on('--help', function() {
   console.log('  Examples:');
@@ -55,7 +56,8 @@ var map = {
   elements: 'elements',
   hash: 'hashAlgorithm',
   length: 'hashLength',
-  format: 'output'
+  format: 'output',
+  unsorted: 'unsorted'
 };
 
 for (var key in map) {

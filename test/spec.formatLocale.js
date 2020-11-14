@@ -38,6 +38,35 @@ describe('s18n.formatLocale()', function() {
     }
   });
 
+  it('should return an unsorted locale as a string', function() {
+    var locale = {
+      'acbd18db': 'foo',
+      '37b51d19': 'bar',
+      '73feffa4': 'baz'
+    };
+    var formatedLocale = s18n.formatLocale(locale, {
+      output: 'string',
+      unsorted: true
+    });
+    assert.equal(formatedLocale, '{\n  "acbd18db": "foo",\n  "37b51d19": "bar",\n  "73feffa4": "baz"\n}');
+  });
+
+  it('should return an unsorted locale as an object', function() {
+    var locale = {
+      'acbd18db': 'foo',
+      'badhash': 'foo',
+      '37b51d19': 'bar',
+      '73feffa4': 'baz'
+    };
+    var formatedLocale = s18n.formatLocale(locale, {unsorted: true});
+    var count = 0;
+    var ordered = ['foo', 'foo', 'bar', 'baz'];
+    for (var number in formatedLocale) {
+      assert.equal(formatedLocale[number], ordered[count]);
+      count++;
+    }
+  });
+
   it('should throw an error if output option is unrecognized', function() {
     assert.throws(
       function() {
