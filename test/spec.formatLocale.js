@@ -46,7 +46,7 @@ describe('s18n.formatLocale()', function() {
     };
     var formatedLocale = s18n.formatLocale(locale, {
       output: 'string',
-      sort: false
+      unsorted: true
     });
     assert.equal(formatedLocale, '{\n  "acbd18db": "foo",\n  "37b51d19": "bar",\n  "73feffa4": "baz"\n}');
   });
@@ -58,7 +58,7 @@ describe('s18n.formatLocale()', function() {
       '37b51d19': 'bar',
       '73feffa4': 'baz'
     };
-    var formatedLocale = s18n.formatLocale(locale, {sort: false});
+    var formatedLocale = s18n.formatLocale(locale, {unsorted: true});
     var count = 0;
     var ordered = ['foo', 'foo', 'bar', 'baz'];
     for (var number in formatedLocale) {

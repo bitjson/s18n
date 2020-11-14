@@ -216,11 +216,9 @@ S18n will trim whitespace from each string (using javascript's `String.prototype
 
 Based on this option, the `extract` method returns the extracted locale as a javascript object or as a formatted JSON string.
 
-#### sort
-- Accepts: `true` or `false`
-- Default: `true`
+#### unsorted
 
-Based on this option, the `extract` and `extractFiles` methods returns a sorted/unsorted extracted locale.
+Based on this option, the `extract` and `extractFiles` methods returns an unsorted extracted locale.
 
 ## Localize
 To localize html, s18n searches through the html for strings in the `nativeLocale`, replacing them with the localized strings in each locale. S18n only matches strings in locations from which they could have been extracted (between `""`, `''`, and `><`) to avoid translating unintended strings.
