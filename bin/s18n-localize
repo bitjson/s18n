@@ -37,7 +37,7 @@ var options = {
   paths: '**/*.html',
   output: './',
   quiet: false,
-  sort: true
+  unsorted: false
 };
 console.log(options);
 
