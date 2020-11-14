@@ -38,7 +38,7 @@ describe('s18n.formatLocale()', function() {
     }
   });
 
-  it('should return and unsorted locale as a string', function() {
+  it('should return an unsorted locale as a string', function() {
     var locale = {
       'acbd18db': 'foo',
       '37b51d19': 'bar',
