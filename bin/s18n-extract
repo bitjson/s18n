@@ -14,7 +14,7 @@ program
   .option('--hash <algo>', 'hashing algorithm to calculate string IDs [default: md5]')
   .option('--length <length>', 'length of string IDs [default: 8]')
   .option('--format <type>', 'format in which to return the locale, "object" or (JSON) "string" [default: \'string\']')
-  .option('--unsorted', 'return an unsorted locale [default: \'false\']');
+  .option('--unsorted', 'return an unsorted extracted locale');
 
 program.on('--help', function() {
   console.log('  Examples:');

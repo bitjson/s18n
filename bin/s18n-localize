@@ -15,7 +15,7 @@ program
   .option('-n, --native <path>', 'path to native locale file [default: \'locales/en.json\']')
   .option('-p, --paths [paths]', 'paths or patterns (globby) to find localizable html files [default: \'**/*.html\']')
   .option('-o, --output <path>', 'directory in which to output localized html files [default: \'./\']')
-  .option('-s, --sort <type>', 'return a sorted or unsorted locale [default: \'true\']')
+  .option('-u, --unsorted', 'return an unsorted locale')
   .option('-q, --quiet', 'suppress logging information');
 
 program.on('--help', function() {
