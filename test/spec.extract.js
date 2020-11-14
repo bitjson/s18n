@@ -149,4 +149,15 @@ describe('s18n.extract()', function() {
     }
   });
 
+  it('should return an unsorted locale object', function() {
+    var html = '<p>String A</p><p>String C</p><p>String B</p>';
+    var locale = s18n.extract(html, {sort: false});
+    var count = 0;
+    var ordered = ['String A', 'String C', 'String B'];
+    for (var number in locale) {
+      assert.equal(locale[number], ordered[count]);
+      count++;
+    }
+  });
+
 });
